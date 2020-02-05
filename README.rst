@@ -1,202 +1,38 @@
+**************************************
 PEGS: Peak-set Enrichment of Gene-Sets
-======================================
+**************************************
 
-------------
-Installation
-------------
+``PEGS`` (**P**\ eak-set **E**\ nrichment of **G**\ ene-**S**\ ets) is
+a Python bioinformatics utility for calculating enrichments of gene
+cluster enrichments from peak data at different genomic distances.
 
-It is recommended to use PEGS from a Python virtual environment,
-which can be created using the ``virtualenv`` utility, for example:
+-----------
+Quick Start
+-----------
 
-::
+Install the latest version of the program from the Python Package Index
+(PyPI)::
 
-    virtualenv venv.pegs
-    source venv.pegs/bin/activate
+    pip install pegs
 
-The PEGS package can then be installed using ``pip``, for example:
+The simplest use of the program is::
 
-::
+    pegs GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR
 
-    pip install pegs-0.0.5.tgz
+where ``GENE_INTERVALS`` is a set of reference transcription
+start sites (TSSs) for all genes, ``PEAKS_DIR`` is a directory
+containing BED files with peak-sets, and ``CLUSTERS_DIR`` is a
+directory containing files defining gene clusters.
 
-This will make the ``pegs`` and ``mk_pegs_intervals`` utilities
-available.
+This will output a PNG heatmap and an XLXS file with the
+p-values and gene counts from the enrichment calculations.
 
-Note: if using PEGS from a virtual environment, make sure to
-activate the environment each time before using it:
+Full documentation can be found at:
 
-::
+ * https://pegs.readthedocs.io/en/latest/
 
-    source venv.pegs/bin/activate
+---------
+Licensing
+---------
 
-(To deactive the virtual environment afterwards, do ``deactivate``.)
-
-In addition: the ``pegs`` utility also requires the ``intersectBed``
-from BEDTools, so you will need to install this separately and make
-sure that it's available your ``PATH`` at runtime.
-
-See https://bedtools.readthedocs.io/en/latest/content/installation.html
-for information on how to obtain and install BEDTools.
-
------
-Usage
------
-
-To run an analysis the basic command line is:
-
-::
-
-    pegs [options] GENE_TSS_INTERVAL_FILE PEAKS_DIR GENE_CLUSTERS_DIR
-
-where:
-
- * ``GENE_TSS_INTERVAL_FILE`` is a text file with transcription
-   start sites (TSSs) for all genes as BED interval data
- * ``PEAKS_DIR`` is a directory with input BED files containing
-   the ChIP-seq (or other genomic intervals) peaks data
- * ``GENE_CLUSTERS_DIR`` is a directory containing file(s) for
-   gene clusters
-
-There are two built-in BED files (``hg38`` and ``mm10``) which
-can be used by specifying the genome build names as the
-``GENE_TSS_INTERVAL_FILE``; otherwise a custom gene interval
-file can be generated from refSeq data using the ``mk_pegs_intervals``
-utility (see below).
-
-The cluster files, in GENE_CLUSTERS_DIR directory, are text
-files with lists of gene names (one gene per line) which
-make up the cluster. They must be named ``cluster_<NAME>.txt``
-to be detected by the program.
-
-PEGS will calculate the enrichments using a default set of
-genomic distances around the input intervals, but these can be
-overriden by a custom set of intervals specified at the end
-of the command line. For example:
-
-::
-
-    pegs mm10 ./InputPeaks/ ./Clusters/ 1000 2000 ...
-
-will calculate enrichments for +/-1KB, +/-2KB ... from the centre
-of the input intervals.
-
-By default the program will write a heatmap to ``pegs_heatmap.png``,
-and generate an XLSX file with the raw data (output) called
-``pegs_results.xlsx``.
-
-By default the result files are written to current working
-directory, but they can be redirected to a different directory,
-by using the ``-o`` option to specify the location. (The
-specified directory will be created if it doesn't already
-exist.)
-
-In addition enrichments for TADs (topologically associating
-domains) can be calculated by providing a BED file with TAD
-boundaries/definitions using the ``-t`` option. In this case
-the heatmap for the TADs will be appended to the heatmap for
-peaks and distances, and the raw data will be appended to
-the XLSX file.
-
---------------------------
-Built-in reference genomes
---------------------------
-
-There are two built-in reference genome interval BED files
-(``hg38`` and ``mm10``) which have been generated from the
-refGene data downloaded from the UCSC table browser on
-12/07/2019.
-
------------------
-Output file names
------------------
-
-The basename for the output files can be set using the
-``--name`` option; by default the basename is ``pegs`` and
-the output files will be called ``pegs_heatmap.png`` and
-``pegs_results.xlsx``.
-
-The names for these output files can also be set explicitly
-using the ``-m`` option (sets the file name for the heatmap)
-and ``-x`` option (sets the file name for the XLSX file).
-
-------------------------------
-Keeping the intersection files
-------------------------------
-
-By default the program removes all working data on successful
-completion, however it is possible to keep the intermediate
-intersection files by specifying the ``-k``
-(``--keep-intersection-files``) option.
-
-In this case the intersection files will be written to the
-directory ``intersection_beds``.
-
--------------------------------
-Making gene interval data files
--------------------------------
-
-The ``mk_pegs_intervals`` utility should be used to
-generate a reference gene interval data file for input into
-the ``pegs`` analysis:
-
-::
-
-    mk_pegs_intervals REFGENE_FILE
-
-where:
-
- * ``REFGENE_FILE`` is the refGene annotation data for the genome
-   of interest
-
-By default the output gene interval file will be called
-``<REFGENE_FILE>_intervals.bed`` (explicitly specify the name using
-the ``-o`` option).
-
--------------------------------
-Customising the heatmap colours
--------------------------------
-
-The heatmap colour palette is the default Seaborn 'cubehelix' palette
-as generated by the ``seaborn.cubehelix_palette`` function:
-
- * https://seaborn.pydata.org/generated/seaborn.cubehelix_palette.html
-
-**I think we should just provide a list of cmap options to user, and more
-customisation should be left to user since we are outputting the
-results.???**
-
-A custom palette can be specified by using the ``--color`` option
-to supply a base colour, for example:
-
-::
-
-    --color seagreen
-
-Alternatively the palette can be fully specified by setting the
-parameters supplied to ``seaborn.cubehelix_palette``, by using the
-``--heatmap-palette`` option. For example, specifying:
-
-::
-
-    --heatmap-palette start=2 reverse=True
-
-results in a "blue/green" heatmap with low values rendered as darker
-and high values as lighter. Some other examples can be found at
-https://seaborn.pydata.org/tutorial/color_palettes.html#sequential-cubehelix-palettes
-
-*Note that this is an advanced option.*
-
---------------
-Known Problems
---------------
-
-Errors about ``numpy.dtype size changed, may indicate binary incompatibility``:
-it's recommended to reinstall the ``scipy`` package using the
-``--no-binary`` option of ``pip``, i.e.:
-
-::
-
-    pip uninstall scipy
-    pip install --no-binary scipy scipy==1.1.0
-
-See https://stackoverflow.com/a/25753627/579925 for more details.
+*TBA*
