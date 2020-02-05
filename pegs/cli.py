@@ -36,16 +36,19 @@ def pegs():
     # Create command line parser
     p = argparse.ArgumentParser(
         description="PEGS: Peak-set Enrichment of Gene-Sets")
-    p.add_argument("gene_interval_file",
-                   metavar="GENE_INTERVAL_FILE",
-                   help="BED file with gene interval data")
+    p.add_argument("gene_intervals",
+                   metavar="GENE_INTERVALS",
+                   help="either name of a built-in set of gene "
+                   "intervals (%s), or a BED file with gene interval "
+                   "data" %
+                   ','.join(["'%s'" % x for x in BUILTIN_GENE_INTERVALS]))
     p.add_argument("peaks_dir",
                    metavar="PEAKS_DIR",
                    help="directory containing BED files with "
                    "peaks data")
     p.add_argument("clusters_dir",
                    metavar="CLUSTERS_DIR",
-                   help="directory containing cluster files")
+                   help="directory containing gene cluster files")
     p.add_argument("distances",metavar="DISTANCE",
                    action="store",
                    nargs="*",
@@ -60,36 +63,35 @@ def pegs():
                    action="store",
                    help="BED file with topologically associating "
                    "domains (TADs)")
-    p.add_argument("--name",metavar="BASENAME",
-                   dest="name",
-                   action='store',
-                   default="pegs",
-                   help="basename for output files (default: 'pegs')")
-    p.add_argument("-o",metavar="OUTPUT_DIRECTORY",
-                   dest="output_directory",
-                   action="store",
-                   default=None,
-                   help="specify directory to write output files to "
-                   "(default: write to current directory)")
-    p.add_argument("-m",metavar="HEATMAP",
-                   dest="output_heatmap",
-                   action="store",
-                   default=None,
-                   help="destination for output heatmap PNG "
-                   "(default: 'BASENAME_heatmap.png')")
-    p.add_argument("-x",metavar="XLSX",
-                   dest="output_xlsx",
-                   action="store",
-                   default=None,
-                   help="destination for output XLSX file with "
-                   "the raw enrichment data (default: "
-                   "'BASENAME_results.xlsx')")
-    p.add_argument("-k","--keep-intersection-files",
-                   dest="keep_intersection_files",
-                   action="store_true",
-                   help="keep the intermediate intersection files "
-                   "(useful for debugging)")
-    g = p.add_mutually_exclusive_group()
+    output_options = p.add_argument_group("Output options")
+    output_options.add_argument("--name",metavar="BASENAME",
+                                dest="name",
+                                action='store',
+                                default="pegs",
+                                help="basename for output files (default: "
+                                "'pegs')")
+    output_options.add_argument("-o",metavar="OUTPUT_DIRECTORY",
+                                dest="output_directory",
+                                action="store",
+                                default=None,
+                                help="specify directory to write output "
+                                "files to (default: write to current "
+                                "directory)")
+    output_options.add_argument("-m",metavar="HEATMAP",
+                                dest="output_heatmap",
+                                action="store",
+                                default=None,
+                                help="destination for output heatmap PNG "
+                                "(default: 'BASENAME_heatmap.png')")
+    output_options.add_argument("-x",metavar="XLSX",
+                                dest="output_xlsx",
+                                action="store",
+                                default=None,
+                                help="destination for output XLSX file "
+                                "with the raw enrichment data (default: "
+                                "'BASENAME_results.xlsx')")
+    heatmap_options = p.add_argument_group("Heatmap options")
+    g = heatmap_options.add_mutually_exclusive_group()
     g.add_argument("--color",
                    dest="heatmap_color",
                    metavar="COLOR",
@@ -110,11 +112,17 @@ def pegs():
                    "https://seaborn.pydata.org/generated/"
                    "seaborn.cubehelix_palette.html (NB not compatible "
                    "with --color)")
-    p.add_argument("--dump-raw-data",
-                   dest="dump_raw_data",
-                   action="store_true",
-                   help="dump the raw data (gene counts and p-values) "
-                   "to TSV files (for debugging)")
+    advanced_options = p.add_argument_group("Advanced options")
+    advanced_options.add_argument("-k","--keep-intersection-files",
+                                  dest="keep_intersection_files",
+                                  action="store_true",
+                                  help="keep the intermediate intersection "
+                                  "files (useful for debugging)")
+    advanced_options.add_argument("--dump-raw-data",
+                                  dest="dump_raw_data",
+                                  action="store_true",
+                                  help="dump the raw data (gene counts and "
+                                  "p-values) to TSV files (for debugging)")
     args = p.parse_args()
     # Generate list of distances
     if not args.distances:
@@ -128,7 +136,7 @@ def pegs():
                 distances.append(int(x))
     distances = sorted(distances)
     # Check if using built-in interval data
-    gene_interval_file = args.gene_interval_file
+    gene_interval_file = args.gene_intervals
     try:
         gene_interval_file = BUILTIN_GENE_INTERVALS[gene_interval_file]
         p = os.path.dirname(__file__)
