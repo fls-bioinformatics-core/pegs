@@ -13,24 +13,33 @@ To run an analysis the basic command line is:
 
 where:
 
- * ``GENE_INTERVAL_FILE`` is a text file with transcription
-   start sites (TSSs) for all genes as BED interval data
- * ``PEAKS_DIR`` is a directory with input BED files containing
-   the ChIP-seq (or other genomic intervals) peaks data
- * ``CLUSTERS_DIR`` is a directory containing file(s) for
-   gene clusters
+ * ``GENE_INTERVALS`` is a set of reference transcription
+   start sites (TSSs) for all genes; it can either be the
+   name of a built-in reference set (for example "mm10"),
+   or file with BED interval data
+ * ``PEAKS_DIR`` is a directory with input BED files
+   containing the ChIP-seq (or other genomic intervals) peaks
+   data (one peak-set per file)
+ * ``CLUSTERS_DIR`` is a directory containing the files
+   defining the gene clusters
+
+``PEGS`` will then calculate the enrichments (p-values and
+counts) using a default set of genomic distances around the
+input intervals in each of the peak-sets.
 
 By default the program outputs a heatmap PNG called
 ``pegs_heatmap.png``, and an XLSX file with the p-values and
 count data called ``pegs_results.xlsx``.
 
+The formats and naming conventions for the various files are
+described in :doc:`inputs` and :doc:`outputs`.
+
 Specifying genomic distances
 ============================
 
-PEGS will calculate the enrichments using a default set of
-genomic distances around the input intervals, but these can be
-overriden by a custom set of intervals specified at the end
-of the command line:
+The default set of genomic distances used in the enrichment
+calculations can be overriden with a custom set of intervals
+specified at the end of the command line:
 
 ::
 
@@ -43,7 +52,7 @@ For example:
     pegs mm10 ./InputPeaks/ ./Clusters/ 1000 2000
 
 will calculate enrichments for +/-1KB and +/-2KB from the centre
-of the input intervals.
+of the input peak-set intervals.
 
 Specifying TADs (``-t``, ``--tads``)
 ====================================

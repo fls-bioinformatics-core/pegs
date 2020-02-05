@@ -2,6 +2,14 @@
 Getting started
 ***************
 
+Running ``PEGS`` requires:
+
+* The ``PEGS`` Python package, and
+* The ``intersectBed`` utility from ``BEDTools``
+
+Installing PEGS
+===============
+
 The recommended way to get started with ``PEGS`` is to create a
 Python virtual environment, and then install the software using
 the ``pip`` utility.
@@ -34,9 +42,14 @@ available.
 
    To deactive the virtual environment afterwards, do ``deactivate``.
 
-``PEGS`` also requires the ``intersectBed`` program from ``BEDTools``, 
-which needs to be installed separately and made available on ``PATH``
-at runtime.
+Installing BEDTOOLS
+===================
+
+``PEGS`` requires the ``intersectBed`` program from the ``BEDTools``
+package.
+
+This needs to be installed separately and then made available on
+your ``PATH`` at runtime.
 
 See https://bedtools.readthedocs.io/en/latest/content/installation.html
 for information on how to obtain and install BEDTools.
