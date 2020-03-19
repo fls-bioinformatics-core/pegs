@@ -52,11 +52,18 @@ available.
 Installing BEDTOOLS
 ===================
 
-``PEGS`` uses the ``bedtools intersect`` function from the ``BEDTools2``
-package.
+``PEGS`` uses the ``bedtools`` program from the ``BEDTools2``
+package to generate the overlaps for the enrichment calculations.
 
-This needs to be installed separately and then made available on
-your ``PATH`` at runtime.
+``bedtools`` needs to be installed separately and then made
+available on your ``PATH`` at runtime, for example for a
+Linux system:
+
+::
+
+   wget https://github.com/arq5x/bedtools2/releases/download/v2.29.2/bedtools.static.binary
+   mv bedtools.static.binary bedtools
+   chmod a+x bedtools
 
 See https://bedtools.readthedocs.io/en/latest/content/installation.html
-for information on how to obtain and install BEDTools2.
+for more information on how to install BEDTools2.
