@@ -180,7 +180,17 @@ def pegs():
                         CUBEHELIX_PALETTE_TYPES[key](value)
         heatmap_cmap = sns.cubehelix_palette(as_cmap=True,
                                              **heatmap_palette_options)
+    # Report version and authors etc
+    print("PEGS %s" % get_version())
+    print("""
+Efficiently calculate enrichments of gene clusters in
+multiple genomic intervals data (e.g. ChIP-seq peak-sets)
+at different distances
 
+University of Manchester
+Faculty of Biology Medicine and Health
+Authors: Mudassar Iqbal, Pete Briggs
+""")
     # Calculate the enrichments
     pegs_main(genes_file=gene_interval_file,
               distances=distances,
@@ -211,6 +221,8 @@ def mk_pegs_intervals():
                    "'<REFGENE_FILE>_intervals.bed')")
     p.add_argument('--version',action='version',version=get_version())
     args = p.parse_args()
+    # Report version
+    print("MK_PEGS_INTERVALS %s\n" % get_version())
     # Generate the gene interval file
     make_gene_interval_file(args.refgene_file,
                             args.gene_interval_file)
