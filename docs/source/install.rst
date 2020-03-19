@@ -5,7 +5,7 @@ Getting started
 Running ``PEGS`` requires:
 
 * The ``PEGS`` Python package, and
-* The ``intersectBed`` utility from ``BEDTools``
+* The ``bedtools`` program from ``BEDTools2``
 
 Installing PEGS
 ===============
@@ -52,11 +52,11 @@ available.
 Installing BEDTOOLS
 ===================
 
-``PEGS`` requires the ``intersectBed`` program from the ``BEDTools``
+``PEGS`` uses the ``bedtools intersect`` function from the ``BEDTools2``
 package.
 
 This needs to be installed separately and then made available on
 your ``PATH`` at runtime.
 
 See https://bedtools.readthedocs.io/en/latest/content/installation.html
-for information on how to obtain and install BEDTools.
+for information on how to obtain and install BEDTools2.
