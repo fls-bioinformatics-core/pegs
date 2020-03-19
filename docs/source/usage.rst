@@ -18,7 +18,7 @@ where:
    name of a built-in reference set (for example "mm10"),
    or file with BED interval data
  * ``PEAKS_DIR`` is a directory with input BED files
-   containing the ChIP-seq (or other genomic intervals) peaks
+   containing the ChIP-seq peaks (or other genomic intervals)
    data (one peak-set per file)
  * ``CLUSTERS_DIR`` is a directory containing the files
    defining the gene clusters
@@ -27,7 +27,7 @@ where:
 counts) using a default set of genomic distances around the
 input intervals in each of the peak-sets.
 
-By default the program outputs a heatmap PNG called
+By default the program outputs a heatmap (PNG file) called
 ``pegs_heatmap.png``, and an XLSX file with the p-values and
 count data called ``pegs_results.xlsx``.
 
@@ -54,12 +54,14 @@ For example:
 will calculate enrichments for +/-1KB and +/-2KB from the centre
 of the input peak-set intervals.
 
+
 Specifying TADs (``-t``, ``--tads``)
 ====================================
 
-Enrichments for TADs (topologically associating domains) can
-be calculated by providing a BED file with TAD definitions
-using the ``-t``/``--tads`` option.
+In addition to individual distances, enrichments within TADs
+(Topologically Associated Domains) can be calculated by
+providing a BED file with TAD definitions using the
+``-t``/``--tads`` option.
 
 In this case the heatmap for the TADs will be appended to the
 heatmap for peaks and distances, and the raw data will be
@@ -68,7 +70,7 @@ appended to the XLSX file.
 Specifying output file names (``--name``, ``-m``, ``-x``)
 =========================================================
 
-The basename for the output files can be set using the
+The basename for all the output files can be set using the
 ``--name`` option; by default the basename is ``pegs`` and
 the output files will be called ``pegs_heatmap.png`` and
 ``pegs_results.xlsx``.
@@ -76,6 +78,12 @@ the output files will be called ``pegs_heatmap.png`` and
 The names for these output files can also be set explicitly
 using the ``-m`` option (sets the file name for the heatmap)
 and ``-x`` option (sets the file name for the XLSX file).
+
+.. note::
+
+   Using the ``-m`` and ``-x`` options to explicitly set
+   the output file names will override the implicit file
+   names generated from the basename.
 
 Specifying where output files are written (``-o``)
 ==================================================

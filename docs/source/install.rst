@@ -22,13 +22,14 @@ For example: to create and activate a virtual environment called
     virtualenv venv.pegs
     source venv.pegs/bin/activate
 
-``PEGS`` package can then be installed using ``pip``, for example:
+The ``PEGS`` package can then be installed using ``pip``, for
+example:
 
 ::
 
     pip install pegs-0.1.0.tgz
 
-This will make the ``pegs`` and ``mk_pegs_intervals`` utilities
+which will make the ``pegs`` and ``mk_pegs_intervals`` utilities
 available.
 
 .. note::
@@ -41,6 +42,12 @@ available.
        source venv.pegs/bin/activate
 
    To deactive the virtual environment afterwards, do ``deactivate``.
+
+.. note::
+
+   PEGS is compatible with both Python2 and Python3; please
+   check :doc:`known problems section <known_problems>` if you
+   encounter any errors when installing the software.
 
 Installing BEDTOOLS
 ===================

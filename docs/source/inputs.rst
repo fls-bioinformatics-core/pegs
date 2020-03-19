@@ -8,19 +8,20 @@ Reference gene intervals file
 The gene intervals file contains the  reference transcription
 start sites (TSSs) for all genes as BED interval data.
 
-There are two built-in gene interval BED files (``hg38`` and
-``mm10``) which have been generated from the refGene data
+There are two built-in gene interval BED files (human``hg38`` and
+mouse ``mm10`` genomes) which have been generated from the refGene data
 downloaded from the UCSC table browser on 12th July 2019.
 These can be used when running ``PEGS`` by specifying the genome
 build names on the command line.
 
-Otherwise a custom gene interval file must be generated from refSeq
-data using the :doc:`mk_pegs_intervals <mk_pegs_intervals>` utility.
+For other genome builds and organisms, a custom gene interval file must
+be generated from refSeq data using the
+:doc:`mk_pegs_intervals <mk_pegs_intervals>` utility.
 
 Peak set files
 ==============
 
-Peak-set files are BED files containing ChIP-seq peaks or other
+Peak-set files are BED files containing ChIP-seq peaks or any other
 genomic interval data of interest.
 
 The files need to contain three columns with chromosome, start
@@ -39,8 +40,8 @@ and heatmap plot files.
 Gene cluster files
 ==================
 
-The gene cluster files are text files with lists of gene names (one gene
-per line) which make up the cluster, for example:
+The gene cluster files are text files with lists of gene names (one
+gene per line) which make up the cluster, for example:
 
 ::
 
@@ -57,10 +58,10 @@ XLSX and heatmap plot files.
 TADs file
 =========
 
-The TADs (topologically associating domains) file is a BED file
+The TADs (Topologically Associating Domains) file is a BED file
 containing intervals which defines a set of TAD boundaries to be
-used in a supplementary enrichment analysis. This supplementary
-analysis uses the TAD intervals instead of the genomic distances.
+used in a supplementary enrichment analysis. This analysis uses
+the TAD intervals instead of the genomic distances.
 
 The files need to contain four columns with chromosome, start and
 end positions, and a name, for example:
@@ -72,5 +73,3 @@ end positions, and a name, for example:
     chr1	4769919	6209919	TAD3
     ...
 
-The TAD names are used as identifiers in the output XLSX and
-heatmap plot files.
