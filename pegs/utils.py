@@ -40,7 +40,7 @@ def count_genes(bed_file):
     """
     Count the total number of genes in a BED file
     """
-    print("Counting genes in %s" % bed_file)
+    print("Counting genes in %s" % basename(bed_file))
     m = 0
     with io.open(bed_file,'rt') as bed:
         for line in bed:

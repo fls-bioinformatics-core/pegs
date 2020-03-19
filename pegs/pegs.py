@@ -251,7 +251,7 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
 
     # Calculate enrichments for all peaks, distances and clusters
     for i,peaks_file in enumerate(peaks):
-        print("===="+basename(peaks_file)+"=======\n")
+        print("-- Processing peaks for %s" % basename(peaks_file))
         for j,distance in enumerate(distances):
             enrichment = calculate_enrichment(genes_file,peaks_file,
                                               clusters,n_genes,
@@ -259,6 +259,7 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
                                               working_dir=working_dir)
             pvalues[i,j,:] = enrichment[0][:]
             counts[i,j,:] = enrichment[1][:]
+    print("")
 
     # Handle TADs
     if tads_file:
@@ -267,7 +268,7 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
         tads_counts = np.zeros([n_peaks,n_clusters])
         # Calculate enrichments for TADs
         for i,peaks_file in enumerate(peaks):
-            print("====TADS: %s=======\n" % basename(peaks_file))
+            print("-- Processing TADS for %s" % basename(peaks_file))
             # Get the subset of TADs which overlap with these peaks
             tads_subset = join(working_dir,
                                "%s.%s.bed" %
@@ -281,13 +282,14 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
                                               report_entire_feature=True)
             tads_pvalues[i,:] = enrichment[0][:]
             tads_counts[i,:] = enrichment[1][:]
+        print("")
     else:
         tads_pvalues = None
         tads_counts = None
 
     # Copy the intersection files
     if keep_intersection_files:
-        print("====Copying intersection BED files=======\n")
+        print("====Copying intersection BED files====\n")
         intersections_dir = "intersection_beds"
         if output_directory is not None:
             intersections_dir = os.path.join(output_directory,
@@ -409,6 +411,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         print("Found %s\n" % bedtools_version.decode().strip())
 
     # Run the enrichment calculations
+    print("====Starting analysis====")
     pvalues,counts,tads_pvalues,tads_counts = \
             calculate_enrichments(genes_file,distances,peaks,clusters,
                                   tads_file,
@@ -433,7 +436,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
 
     # Dump the 'raw' numbers for checking/debugging
     if dump_raw_data:
-        print("====Dumping raw data to TSV files=======\n")
+        print("====Dumping raw data to TSV files====\n")
         write_raw_data(name,peaks,clusters,distances,
                        pvalues,counts,tads_pvalues=tads_pvalues,
                        tads_counts=tads_counts,
