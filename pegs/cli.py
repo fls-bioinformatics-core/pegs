@@ -16,6 +16,9 @@ from .bedtools import bedtools_version
 from .utils import find_exe
 from . import get_version
 
+# Description
+PEGS_DESCRIPTION = "PEGS: Peak-set Enrichment of Gene-Sets"
+
 # Default set of distances for enrichment calculation
 DEFAULT_DISTANCES = [5000,25000,50000,100000,150000,200000]
 
@@ -39,8 +42,7 @@ CUBEHELIX_PALETTE_TYPES = {
 
 def pegs():
     # Create command line parser
-    p = argparse.ArgumentParser(
-        description="PEGS: Peak-set Enrichment of Gene-Sets")
+    p = argparse.ArgumentParser(description=PEGS_DESCRIPTION)
     p.add_argument("gene_intervals",
                    metavar="GENE_INTERVALS",
                    help="either name of a built-in set of gene "
@@ -186,15 +188,15 @@ def pegs():
         heatmap_cmap = sns.cubehelix_palette(as_cmap=True,
                                              **heatmap_palette_options)
     # Report version and authors etc
-    print("PEGS %s" % get_version())
+    print("%s %s" % (PEGS_DESCRIPTION,get_version()))
     print("""
 Efficiently calculate enrichments of gene clusters in
 multiple genomic intervals data (e.g. ChIP-seq peak-sets)
 at different distances
 
-University of Manchester
+Copyright University of Manchester
 Faculty of Biology Medicine and Health
-Authors: Mudassar Iqbal, Pete Briggs
+Authors: Mudassar Iqbal, Peter Briggs
 """)
 
     # Add PEGS 'bin' directory in user's home area to PATH
