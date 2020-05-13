@@ -8,11 +8,7 @@ import os
 import argparse
 import logging
 import seaborn as sns
-try:
-    import pathlib
-except ImportError:
-    # Python2 version of pathlib
-    import pathlib2 as pathlib
+import pathlib2
 from .pegs import pegs_main
 from .intervals import make_gene_interval_file
 from .bedtools import fetch_bedtools
@@ -203,7 +199,7 @@ Authors: Mudassar Iqbal, Pete Briggs
 
     # Add PEGS 'bin' directory in user's home area to PATH
     # NB this might not exist
-    pegs_dir = os.path.join(pathlib.Path.home(),".pegs")
+    pegs_dir = os.path.join(str(pathlib2.Path.home()),".pegs")
     pegs_bin_dir = os.path.join(pegs_dir,"bin")
     os.environ['PATH'] = "%s%s%s" % (os.environ['PATH'],
                                      os.pathsep,

@@ -11,6 +11,7 @@ install_requires = ['numpy==1.16',
                     'pillow==5.3.0',
                     'seaborn==0.9.0',
                     'xlsxwriter >= 0.8.4',
+                    'pathlib2',
                     'future',]
 
 ##download_url = 'https://github.com/NAME/pegs/archive/v' + version + 'tar.gz'
