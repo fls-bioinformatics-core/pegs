@@ -30,10 +30,10 @@ from os.path import abspath
 from os.path import splitext
 from os.path import exists
 
+from .bedtools import intersect
 from .outputs import make_heatmap
 from .outputs import make_xlsx_file
 from .outputs import write_raw_data
-from .utils import find_exe
 from .utils import collect_files
 from .utils import get_cluster_files
 from .utils import count_genes
@@ -50,37 +50,6 @@ MIN_PVALUE = 1e-12
 #######################################################################
 # Functions
 #######################################################################
-
-def run_intersect_bed(infile_a,infile_b,outfile,working_dir=None,
-                      report_entire_feature=False):
-    """
-    Run 'bedtools intersect'
-
-    infile_a (str): path to input file 'A' (-a)
-    infile_b (str): path to input file 'B' (-b)
-    outfile (str): path to output file
-    working_dir (str): (optional) working directory to run
-      'intersectBed' in (defaults to CWD)
-    report_entire_feature (bool): (optional) if True then
-      write the original entry in 'A' for each overlap (-wa)
-
-    Returns the name of the output file.
-    """
-    # Working directory
-    if working_dir is None:
-        wd = getcwd()
-    else:
-        wd = abspath(working_dir)
-    # Build command
-    cmd = ["bedtools","intersect"]
-    if report_entire_feature:
-        cmd.append("-wa")
-    cmd.extend(["-a",infile_a,
-                "-b",infile_b])
-    # Run command
-    with io.open(outfile,'wt') as output:
-        exit_code = subprocess.call(cmd,cwd=wd,stdout=output)
-    return outfile
 
 def make_expanded_bed(bed_file,expanded_bed_file,interval):
     """
@@ -108,7 +77,7 @@ def make_expanded_bed(bed_file,expanded_bed_file,interval):
 
 def get_overlapping_genes(genes_file,peaks_file,interval=None,
                           report_entire_feature=False,
-                          working_dir=None):
+                          working_dir=None,bedtools_exe="bedtools"):
     """
     Find genes overlapping ChIP-seq peaks
 
@@ -121,6 +90,7 @@ def get_overlapping_genes(genes_file,peaks_file,interval=None,
     report_entire_feature (bool): if True then run intersectBed
     with the -wa option (to report the entire feature, not just
     the overlap)
+    bedtools_exe (str): 'bedtools' executable to use
     """
     # Working directory
     if working_dir is None:
@@ -143,9 +113,9 @@ def get_overlapping_genes(genes_file,peaks_file,interval=None,
         expanded_bed_file = peaks_file
     # Intersect gene promoters
     intersection_file = join(wd,"Intersection.%s.bed" % output_basename)
-    run_intersect_bed(genes_file,expanded_bed_file,intersection_file,
-                      working_dir=wd,
-                      report_entire_feature=report_entire_feature)
+    intersect(genes_file,expanded_bed_file,intersection_file,
+              working_dir=wd,report_entire_feature=report_entire_feature,
+              bedtools_exe=bedtools_exe)
     # Read data from intersection file to get unique list of genes
     # (across all genome) which are overlapping with ChIPseq peaks for
     # this interval
@@ -159,7 +129,7 @@ def get_overlapping_genes(genes_file,peaks_file,interval=None,
     return genes
 
 def get_tads_overlapping_peaks(tads_file,peaks_file,tads_subset_file,
-                               working_dir=None):
+                               working_dir=None,bedtools_exe="bedtools"):
     """
     Get subset of TADs overlapping peaks
 
@@ -170,14 +140,16 @@ def get_tads_overlapping_peaks(tads_file,peaks_file,tads_subset_file,
       overlapping with the peaks
     - working_dir (str): (optional) working directory to use for
       intermediate files (defaults to CWD)
+    - bedtools_exe (str): 'bedtools' executable to use
     """
-    run_intersect_bed(tads_file,peaks_file,tads_subset_file,
-                      working_dir=working_dir,
-                      report_entire_feature=True)
+    intersect(tads_file,peaks_file,tads_subset_file,
+              working_dir=working_dir,report_entire_feature=True,
+              bedtools_exe=bedtools_exe)
     return tads_subset_file
 
 def calculate_enrichment(genes_file,peaks_file,clusters,n_genes,working_dir,
-                         distance=None,report_entire_feature=False):
+                         distance=None,report_entire_feature=False,
+                         bedtools_exe="bedtools"):
     """
     Calculate enrichment for a single peak set and distance
 
@@ -186,6 +158,10 @@ def calculate_enrichment(genes_file,peaks_file,clusters,n_genes,working_dir,
     peaks_file (list): BED file containing the ChIP-seq peaks
     clusters (list): cluster files
     n_genes (int): total number of genes in the genes BED file
+    report_entire_feature (bool): if True then run intersectBed
+    with the -wa option (to report the entire feature, not just
+    the overlap)
+    bedtools_exe (str): 'bedtools' executable to use
 
     Returns tuple (pvalue,counts) i.e. col1 for p-val, col2 for
     number of genes)
@@ -220,7 +196,7 @@ def calculate_enrichment(genes_file,peaks_file,clusters,n_genes,working_dir,
 
 def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
                           keep_intersection_files=False,
-                          output_directory=None):
+                          output_directory=None,bedtools_exe="bedtools"):
     """
     Calculate enrichments for all ChIP-seq peak files and distances
 
@@ -233,6 +209,7 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
       intersection files from bedtools
     output_directory (str): path to output directory (only used if
        keeping intersection files)
+    bedtools_exe (str): 'bedtools' executable to use
     """
     # Temporary working directory
     working_dir = tempfile.mkdtemp(prefix="__LocalBeds.",dir=getcwd())
@@ -256,7 +233,8 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
             enrichment = calculate_enrichment(genes_file,peaks_file,
                                               clusters,n_genes,
                                               distance=distance,
-                                              working_dir=working_dir)
+                                              working_dir=working_dir,
+                                              bedtools_exe=bedtools_exe)
             pvalues[i,j,:] = enrichment[0][:]
             counts[i,j,:] = enrichment[1][:]
     print("")
@@ -274,7 +252,8 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
                                "%s.%s.bed" %
                                (splitext(basename(peaks_file))[0],
                                 splitext(basename(tads_file))[0]))
-            get_tads_overlapping_peaks(tads_file,peaks_file,tads_subset)
+            get_tads_overlapping_peaks(tads_file,peaks_file,tads_subset,
+                                       bedtools_exe=bedtools_exe)
             # Calculate enrichments for the subset of TADs
             enrichment = calculate_enrichment(genes_file,tads_subset,
                                               clusters,n_genes,
@@ -310,7 +289,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
               tads_file,name,heatmap=None,xlsx=None,
               output_directory=None,
               keep_intersection_files=False,
-              heatmap_cmap=None,
+              heatmap_cmap=None,bedtools_exe="bedtools",
               dump_raw_data=False):
     """
     Driver function for enrichment calculation
@@ -331,6 +310,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         intersection files from bedtools
       heatmap_cmap (cmap): non-default colormap to use when creating
         the heatmaps
+      bedtools_exe (str): 'bedtools' executable to use
       dump_raw_data (bool): if True then save the raw enrichment data
         to file (for debugging purposes)
     """
@@ -400,16 +380,6 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         xlsx = "%s_results.xlsx" % name
     xlsx = os.path.join(output_directory,xlsx)
 
-    # Check that bedtools is available
-    print("====Locating bedtools====")
-    if not find_exe("bedtools"):
-        logging.fatal("'bedtools' not found")
-        return
-    else:
-        bedtools_version = subprocess.check_output(['bedtools',
-                                                    '--version'])
-        print("Found %s\n" % bedtools_version.decode().strip())
-
     # Run the enrichment calculations
     print("====Starting analysis====")
     pvalues,counts,tads_pvalues,tads_counts = \
@@ -417,7 +387,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
                                   tads_file,
                                   keep_intersection_files=
                                   keep_intersection_files,
-                                  output_directory=output_directory)
+                                  output_directory=output_directory,
+                                  bedtools_exe=bedtools_exe)
 
     # Plot the heatmap
     print("====Writing heatmap====")

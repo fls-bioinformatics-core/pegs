@@ -6,9 +6,14 @@
 from builtins import str
 import os
 import argparse
+import logging
 import seaborn as sns
+import pathlib2
 from .pegs import pegs_main
 from .intervals import make_gene_interval_file
+from .bedtools import fetch_bedtools
+from .bedtools import bedtools_version
+from .utils import find_exe
 from . import get_version
 
 # Default set of distances for enrichment calculation
@@ -191,6 +196,29 @@ University of Manchester
 Faculty of Biology Medicine and Health
 Authors: Mudassar Iqbal, Pete Briggs
 """)
+
+    # Add PEGS 'bin' directory in user's home area to PATH
+    # NB this might not exist
+    pegs_dir = os.path.join(str(pathlib2.Path.home()),".pegs")
+    pegs_bin_dir = os.path.join(pegs_dir,"bin")
+    os.environ['PATH'] = "%s%s%s" % (os.environ['PATH'],
+                                     os.pathsep,
+                                     pegs_bin_dir)
+
+    # Locate bedtools executable
+    bedtools_exe = find_exe("bedtools")
+    if not bedtools_exe:
+        # Not found
+        logging.warning("'bedtools' not found")
+        # Attempt to get bedtools
+        bedtools_exe = fetch_bedtools(install_dir=pegs_bin_dir,
+                                      create_install_dir=True)
+        if not bedtools_exe:
+            logging.fatal("Failed to fetch 'bedtools'")
+            return 1
+    print("Found %s (%s)\n" % (bedtools_version(bedtools_exe),
+                               bedtools_exe))
+
     # Calculate the enrichments
     pegs_main(genes_file=gene_interval_file,
               distances=distances,

@@ -55,9 +55,21 @@ Installing BEDTOOLS
 ``PEGS`` uses the ``bedtools`` program from the ``BEDTools2``
 package to generate the overlaps for the enrichment calculations.
 
-``bedtools`` needs to be installed separately and then made
-available on your ``PATH`` at runtime, for example for a
-Linux system:
+If ``bedtools`` is not available when ``PEGS`` is run then ``PEGS``
+will attempt to download and install it in the user's home area,
+under:
+
+::
+
+   ${HOME}/.pegs/bin/
+
+Subsequently runs of ``PEGS`` will use this version of ``bedtools``
+if no other versions can be found.
+
+Alternatively ``bedtools`` can to be installed separately and then
+made available on the user's ``PATH`` at runtime.
+
+For example for a Linux system:
 
 ::
 
