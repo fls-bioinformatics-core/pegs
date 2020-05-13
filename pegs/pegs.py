@@ -310,6 +310,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         intersection files from bedtools
       heatmap_cmap (cmap): non-default colormap to use when creating
         the heatmaps
+      bedtools_exe (str): 'bedtools' executable to use
       dump_raw_data (bool): if True then save the raw enrichment data
         to file (for debugging purposes)
     """
