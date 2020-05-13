@@ -34,7 +34,6 @@ from .bedtools import intersect
 from .outputs import make_heatmap
 from .outputs import make_xlsx_file
 from .outputs import write_raw_data
-from .utils import find_exe
 from .utils import collect_files
 from .utils import get_cluster_files
 from .utils import count_genes
@@ -379,16 +378,6 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
     if xlsx is None:
         xlsx = "%s_results.xlsx" % name
     xlsx = os.path.join(output_directory,xlsx)
-
-    # Check that bedtools is available
-    print("====Locating bedtools====")
-    if not find_exe("bedtools"):
-        logging.fatal("'bedtools' not found")
-        return
-    else:
-        bedtools_version = subprocess.check_output(['bedtools',
-                                                    '--version'])
-        print("Found %s\n" % bedtools_version.decode().strip())
 
     # Run the enrichment calculations
     print("====Starting analysis====")
