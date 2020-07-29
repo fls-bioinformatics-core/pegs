@@ -32,13 +32,13 @@ setup(
         'pegs = pegs.cli:pegs',
         'mk_pegs_intervals = pegs.cli:mk_pegs_intervals',]
     },
-    ##license = 'MIT',
+    license = 'BSD-3-Clause',
     keywords = ['PEGS',],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'Environment :: Console',
-        ##'License :: OSI Approved :: MIT',
+        'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Natural Language :: English',
