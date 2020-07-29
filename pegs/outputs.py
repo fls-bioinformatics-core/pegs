@@ -27,7 +27,13 @@ from builtins import str
 import io
 import os
 import numpy as np
+
+# Import matplotlib and explicitly set the
+# backend - see https://stackoverflow.com/a/48374671/579925
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+
 import seaborn as sns
 import xlsxwriter
 
