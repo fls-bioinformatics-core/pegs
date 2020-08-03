@@ -6,6 +6,10 @@ PEGS: Peak-set Enrichment of Gene-Sets
 a Python bioinformatics utility for calculating enrichments of gene
 cluster enrichments from peak data at different genomic distances.
 
+* Free software: 3-Clause BSD License
+* Documentation: https://pegs.readthedocs.io/en/latest/
+* Code: https://github.com/fls-bioinformatics-core/pegs
+
 -----------
 Quick Start
 -----------
