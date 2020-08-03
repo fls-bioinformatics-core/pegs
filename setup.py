@@ -21,8 +21,10 @@ setup(
     name = "pegs",
     version = pegs.get_version(),
     description = "Peak-set Enrichment of Gene-Sets (PEGS)",
-    ##long_description = "TBA",
-    ##url = 'https://github.com/NAME/pegs',
+    long_description = "PEGS is a Python bioinformatics utility for " \
+    "calculating enrichments of gene cluster enrichments from peak data " \
+    "at different genomic distances",
+    url = 'https://github.com/fls-bioinformatics-core/pegs',
     ##download_url = download_url,
     author = 'Mudassar Iqbal, Peter Briggs',
     maintainer = 'Peter Briggs',
@@ -45,6 +47,7 @@ setup(
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
         "Programming Language :: Python :: 3",
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
     test_suite='nose.collector',
