@@ -17,12 +17,20 @@ peak-sets expanded to different genomic distances.
 The cell color represents -log10(p-value) of enrichment, and
 annotation of cells are the number of common genes for that
 particular combination of gene cluster (x-axis) and gene-set
-derived from the expanded peak-set (y-axis).
+derived from the expanded peak-set (y-axis). For example:
+
+.. image:: images/example_heatmap.png
+   :width: 400
+   :alt: Example heatmap from PEGS
 
 If TADs are used, then the additional subplot at the bottom shows
 similar enrichment as above, but without individual distances
 for peak-sets (because each genomic interval is expanded to
-distance/bounary defined in the TADs BED file).
+distance/bounary defined in the TADs BED file). For example:
+
+.. image:: images/example_with_tads_heatmap.png
+   :width: 400
+   :alt: Example heatmap with TADs from PEGS
 
 Customising the heatmap
 -----------------------
@@ -58,7 +66,11 @@ XLSX file
 =========
 
 This spreadsheet includes all the data (including p-values, and
-common genes) used to generate the heatmap.
+common genes) used to generate the heatmap; for example:
+
+.. image:: images/example_results_xlsx.png
+   :width: 400
+   :alt: Example XLSX output from PEGS
 
 Optional outputs
 ================
