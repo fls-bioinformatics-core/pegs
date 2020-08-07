@@ -265,26 +265,26 @@ run_test "pegs: using built-in mm10 data" \
 # pegs keeping intermediate intersection files
 run_test "pegs: keep intersection files" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx
-    intersection_beds/Intersection.gene_intervals.P63_common.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E135_merged.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E145_merged.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_common.25000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E135_merged.25000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E145_merged.25000.bed" \
+    intersection_beds/Intersection.gene_intervals.peakset1.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset2.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset3.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset1.25000.bed
+    intersection_beds/Intersection.gene_intervals.peakset2.25000.bed
+    intersection_beds/Intersection.gene_intervals.peakset3.25000.bed" \
     --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters 5000,25000 --keep-intersection-files"
 #
 # pegs keeping intermediate intersection files (including TADS)
 run_test "pegs: keep intersection files (including TADS)" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx
-    intersection_beds/Intersection.gene_intervals.P63_common.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E135_merged.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E145_merged.5000.bed
-    intersection_beds/Intersection.gene_intervals.P63_common.25000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E135_merged.25000.bed
-    intersection_beds/Intersection.gene_intervals.P63_E145_merged.25000.bed
-    intersection_beds/Intersection.gene_intervals.P63_common.tads.bed
-    intersection_beds/Intersection.gene_intervals.P63_E135_merged.tads.bed
-    intersection_beds/Intersection.gene_intervals.P63_E145_merged.tads.bed" \
+    intersection_beds/Intersection.gene_intervals.peakset1.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset2.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset3.5000.bed
+    intersection_beds/Intersection.gene_intervals.peakset1.25000.bed
+    intersection_beds/Intersection.gene_intervals.peakset2.25000.bed
+    intersection_beds/Intersection.gene_intervals.peakset3.25000.bed
+    intersection_beds/Intersection.gene_intervals.peakset1.tads.bed
+    intersection_beds/Intersection.gene_intervals.peakset2.tads.bed
+    intersection_beds/Intersection.gene_intervals.peakset3.tads.bed" \
     --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters 5000,25000 -t $DATA_DIR/tads.txt --keep-intersection-files"
 #
 # pegs with --name option
