@@ -2,6 +2,16 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.4.0 (2020-08-18)
+--------------------------
+
+* Drop the requirement that cluster files must be named
+  ``cluster_*.txt``; all files in the clusters directory
+  will now be included in the analysis. The file names
+  (without the file extension) will be used as x-axis
+  labels in the plots.
+
+--------------------------
 Version 0.3.0 (2020-05-13)
 --------------------------
 
