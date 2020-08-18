@@ -8,6 +8,7 @@ import shutil
 from pegs.utils import find_exe
 from pegs.utils import count_genes
 from pegs.utils import collect_files
+from pegs.utils import split_file_name_for_sort
 from pegs.utils import intersection_file_basename
 
 class TestFindExe(unittest.TestCase):
@@ -87,12 +88,26 @@ class TestCollectFiles(unittest.TestCase):
         """
         cluster_files = [os.path.join(self.test_dir,
                                       "cluster_%s.txt" % name)
-                         for name in ("1","10","2","3","null")]
+                         for name in ("1","2","3","10","null")]
         for f in cluster_files:
             with open(f,'wt') as fp:
                 fp.write("4930516B21Rik\n")
         self.assertEqual(collect_files(self.test_dir),
                          cluster_files)
+
+class TestSplitFileNameForSort(unittest.TestCase):
+    def test_split_file_name_for_sort(self):
+        """
+        split_file_name_for_sort: test names are split correctly
+        """
+        self.assertEqual(split_file_name_for_sort("peaks1.bed"),
+                         ("peaks",1,".bed"))
+        self.assertEqual(split_file_name_for_sort("cluster_10.txt"),
+                         ("cluster_",10,".txt"))
+        self.assertEqual(split_file_name_for_sort("cluster_10_0001.txt"),
+                         ("cluster_",10,"_",1,".txt"))
+        self.assertEqual(split_file_name_for_sort("cluster_10.0001.txt"),
+                         ("cluster_",10,".",1,".txt"))
 
 class TestIntersectionFileBasename(unittest.TestCase):
     def test_intersection_file_basename(self):
