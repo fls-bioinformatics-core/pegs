@@ -53,38 +53,53 @@ def collect_files(d):
     Collect files from a directory
     """
     return sorted([abspath(join(d,f))
-                   for f in listdir(d) if isfile(join(d,f))])
+                   for f in listdir(d) if isfile(join(d,f))],
+                  key=split_file_name_for_sort)
 
-def get_cluster_files(d):
+def split_file_name_for_sort(f):
     """
-    Collect cluster files from a directory
+    Returns tuple of string and integer components for sorting
 
-    Cluster files are expected to be named "cluster_<NAME>.txt"
+    For example:
+
+    "cluster_10.txt" -> ("cluster_",10,".txt")
     """
-    cluster_files = filter(lambda f: fnmatch(basename(f),"cluster_*.txt"),
-                           collect_files(abspath(d)))
-    return sorted(cluster_files,
-                  key=lambda f: get_cluster_name(f,as_padded_int=True))
-
-def get_cluster_name(f,as_padded_int=False):
-    """
-    Return the cluster name from the file name
-
-    Extracts the "<NAME>" component from files of the form
-    "PATH/TO/cluster_<NAME>.txt"
-
-    If the 'as_padded_int' argument is True then try to
-    convert the name to an integer and return as a string
-    padded with zeros (e.g. 12 -> "0000000012"), otherwise
-    return it as a string.
-    """
-    name = basename(f)[8:-4]
-    if as_padded_int:
-        try:
-            name = "%010d" % int(name)
-        except ValueError:
-            pass
-    return name
+    components = []
+    current_component = ''
+    component_is_digits = False
+    # Loop over characters in the input string
+    for c in str(f):
+        if current_component:
+            # Already building a group of characters
+            if (c.isdigit() and not component_is_digits) or \
+               (not c.isdigit() and component_is_digits):
+                # Next character is a different type from
+                # the current group, so the current group
+                # is complete
+                if component_is_digits:
+                    # Convert digits to integer
+                    current_component = int(current_component)
+                components.append(current_component)
+                # Reset for a new group of characters
+                current_component = ''
+                component_is_digits = False
+            else:
+                # Next character is same type as current
+                # group, just append it
+                current_component += c
+        if not current_component:
+            # Next character starts a new group
+            current_component += c
+            component_is_digits = c.isdigit()
+    # Finished looping, check if there is a final
+    # unprocessed character group
+    if current_component:
+        if component_is_digits:
+            # Convert digits to integer
+            current_component = int(current_component)
+        components.append(current_component)
+    # Return the tuple of elements
+    return tuple(components)
 
 def intersection_file_basename(interval_file,peak_file,distance=None):
     """

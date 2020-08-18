@@ -34,8 +34,6 @@ import xlsxwriter
 from os.path import basename
 from os.path import splitext
 
-from .utils import get_cluster_name
-
 #######################################################################
 # Functions
 #######################################################################
@@ -85,7 +83,8 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
         max_pvalue = max(max_pvalue,np.amax(-np.log10(tads_pvalues)))
 
     # Xlabel (cluster names)
-    xlbls = [get_cluster_name(x) for x in clusters]
+    xlbls = [os.path.splitext(os.path.basename(x))[0]
+             for x in clusters]
 
     # Ylabel (interval distances repeated for each peak set)
     ylbls = [d for d in distances] * n_peaks
@@ -270,7 +269,8 @@ def make_xlsx_file(xlsx_file,peaks,clusters,distances,pvalues,counts,
     n_distances = len(distances)
     include_tads = (tads_pvalues is not None) and \
                    (tads_counts is not None)
-    cluster_names = [get_cluster_name(x) for x in clusters]
+    cluster_names = [os.path.splitext(os.path.basename(x))[0]
+                     for x in clusters]
 
     # Output workbook
     xlsx_out = xlsxwriter.Workbook(xlsx_file)
