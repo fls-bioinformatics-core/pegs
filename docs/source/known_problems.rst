@@ -65,7 +65,7 @@ which should then have the correct version of ``setuptools``.
 
 ::
 
-   pip install pegs-0.1.0.tgz
+   pip install pegs-0.3.0.tgz
 
 as before.
 
