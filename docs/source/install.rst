@@ -47,7 +47,14 @@ available.
 
    PEGS is compatible with both Python2 and Python3; please
    check :doc:`known problems section <known_problems>` if you
-   encounter any errors when installing the software.
+   encounter any errors when installing or running the software.
+
+.. note::
+
+   If installing PEGS on Mac OS X it is possible that you will
+   get an error at runtime relating to Python not being installed
+   as a framework; in this case please try reinstalling PEGS using
+   the workaround in :doc:`known problems section <known_problems>`.
 
 Installing BEDTOOLS
 ===================
