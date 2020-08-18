@@ -55,37 +55,6 @@ def collect_files(d):
     return sorted([abspath(join(d,f))
                    for f in listdir(d) if isfile(join(d,f))])
 
-def get_cluster_files(d):
-    """
-    Collect cluster files from a directory
-
-    Cluster files are expected to be named "cluster_<NAME>.txt"
-    """
-    cluster_files = filter(lambda f: fnmatch(basename(f),"cluster_*.txt"),
-                           collect_files(abspath(d)))
-    return sorted(cluster_files,
-                  key=lambda f: get_cluster_name(f,as_padded_int=True))
-
-def get_cluster_name(f,as_padded_int=False):
-    """
-    Return the cluster name from the file name
-
-    Extracts the "<NAME>" component from files of the form
-    "PATH/TO/cluster_<NAME>.txt"
-
-    If the 'as_padded_int' argument is True then try to
-    convert the name to an integer and return as a string
-    padded with zeros (e.g. 12 -> "0000000012"), otherwise
-    return it as a string.
-    """
-    name = basename(f)[8:-4]
-    if as_padded_int:
-        try:
-            name = "%010d" % int(name)
-        except ValueError:
-            pass
-    return name
-
 def intersection_file_basename(interval_file,peak_file,distance=None):
     """
     Generate a name for an intersection file

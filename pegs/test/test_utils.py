@@ -8,8 +8,6 @@ import shutil
 from pegs.utils import find_exe
 from pegs.utils import count_genes
 from pegs.utils import collect_files
-from pegs.utils import get_cluster_files
-from pegs.utils import get_cluster_name
 from pegs.utils import intersection_file_basename
 
 class TestFindExe(unittest.TestCase):
@@ -83,49 +81,18 @@ class TestCollectFiles(unittest.TestCase):
                 fp.write("test\n")
         self.assertEqual(collect_files(self.test_dir),
                          files)
-
-class TestGetClusterFiles(unittest.TestCase):
-    def setUp(self):
-        self.test_dir = tempfile.mkdtemp()
-    def tearDown(self):
-        if os.path.exists(self.test_dir):
-            shutil.rmtree(self.test_dir)
-    def test_get_cluster_files(self):
+    def test_collect_files_for_clusters(self):
         """
-        get_cluster_files: returns "cluster_*.txt" files from directory
+        collect_files: returns list of cluster files in directory
         """
         cluster_files = [os.path.join(self.test_dir,
                                       "cluster_%s.txt" % name)
-                         for name in ("1","2","3","10","null")]
+                         for name in ("1","10","2","3","null")]
         for f in cluster_files:
             with open(f,'wt') as fp:
                 fp.write("4930516B21Rik\n")
-        extra_files = [os.path.join(self.test_dir,f)
-                       for f in ("cluster_1.bed","other.txt")]
-        self.assertEqual(get_cluster_files(self.test_dir),
+        self.assertEqual(collect_files(self.test_dir),
                          cluster_files)
-
-class TestGetClusterName(unittest.TestCase):
-    def test_get_cluster_name(self):
-        """
-        get_cluster_name: extract cluster name from file path
-        """
-        self.assertEqual(get_cluster_name("/path/to/cluster_1.txt"),"1")
-        self.assertEqual(get_cluster_name("/path/to/cluster_10.txt"),"10")
-        self.assertEqual(get_cluster_name("/path/to/cluster_null.txt"),"null")
-    def test_get_cluster_name_as_padded_integer(self):
-        """
-        get_cluster_name: extract cluster name and convert to padded integer
-        """
-        self.assertEqual(get_cluster_name("/path/to/cluster_1.txt",
-                                          as_padded_int=True),
-                         "0000000001")
-        self.assertEqual(get_cluster_name("/path/to/cluster_10.txt",
-                                          as_padded_int=True),
-                         "0000000010")
-        self.assertEqual(get_cluster_name("/path/to/cluster_null.txt",
-                                          as_padded_int=True),
-                         "null")
 
 class TestIntersectionFileBasename(unittest.TestCase):
     def test_intersection_file_basename(self):

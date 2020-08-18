@@ -35,9 +35,7 @@ from .outputs import make_heatmap
 from .outputs import make_xlsx_file
 from .outputs import write_raw_data
 from .utils import collect_files
-from .utils import get_cluster_files
 from .utils import count_genes
-from .utils import get_cluster_name
 from .utils import intersection_file_basename
 
 #######################################################################
@@ -335,7 +333,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
     print("")
 
     # Get the cluster files
-    clusters = get_cluster_files(clusters_dir)
+    clusters = collect_files(clusters_dir)
     print("====Cluster Files====")
     print("Directory: %s" % clusters_dir)
     if not clusters:

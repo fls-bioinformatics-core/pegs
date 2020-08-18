@@ -51,9 +51,8 @@ gene per line) which make up the cluster, for example:
     Asnsd1
     ...
 
-They must be named ``cluster_NAME.txt`` to be detected by the
-program; the ``NAME``\s are used as identifiers in the output
-XLSX and heatmap plot files.
+The names of the files are used as the identifiers for the clusters
+in the ouput XLSX and heatmap plot files.
 
 TADs file
 =========
