@@ -4,7 +4,7 @@ PEGS: Peak-set Enrichment of Gene-Sets
 
 ``PEGS`` (**P**\ eak-set **E**\ nrichment of **G**\ ene-**S**\ ets) is
 a Python bioinformatics utility for calculating enrichments of gene
-cluster enrichments from peak data at different genomic distances.
+clusters at different genomic distances from peaks.
 
 * Free software: 3-Clause BSD License
 * Documentation: https://pegs.readthedocs.io/en/latest/
