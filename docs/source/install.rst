@@ -27,7 +27,7 @@ example:
 
 ::
 
-    pip install pegs-0.3.0.tgz
+    pip install pegs-0.4.0.tgz
 
 which will make the ``pegs`` and ``mk_pegs_intervals`` utilities
 available.
