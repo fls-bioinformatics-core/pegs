@@ -59,4 +59,4 @@ Full documentation can be found at:
 Licensing
 ---------
 
-*TBA*
+PEGS is licensed under the 3-Clause BSD License.
