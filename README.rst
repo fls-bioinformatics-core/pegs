@@ -68,11 +68,11 @@ Example: Mouse glucocorticoidal dataset
 An example application of ``PEGS`` is the analysis of up- and
 down-regulated glucocorticoidal targets from an RNA-seq study
 of liver samples from mice treated acutely with dexamethasone
-or vehicle [Caratti *et al.* 2018], combined with corresponding
+or vehicle (Caratti *et al.* 2018), combined with corresponding
 GR ChIP-seq and chromatin accessibility data (DNase I
-hypersensitive (DHS) regions) ([Grontved *et al.* 2013] and
-[Sobel *et al.* 2017] respectively), and mouse liver TAD
-boundary data [Kim *et al.* 2018].
+hypersensitive (DHS) regions) (Grontved *et al.* 2013 and
+Sobel *et al.* 2017 respectively), and mouse liver TAD
+boundary data (Kim *et al.* 2018).
 
 The files for these datasets are available here:
 
@@ -87,12 +87,12 @@ The files for these datasets are available here:
    `mESC-TADs_mm10.txt <examples/glucocorticoid_example/data/mESC-TADs_mm10.txt>`_
 
 The ``PEGS`` analysis was performed on these data using the
-command:
+command::
 
     pegs mm10 \
-       data/peaks/ data/clusters/
-       -t data/mESC-TADs_mm10.txt \
-       1000 5000 10000 50000 100000 200000 500000 1000000 5000000
+      data/peaks/ data/clusters/ \
+      -t data/mESC-TADs_mm10.txt \
+      1000 5000 10000 50000 100000 200000 500000 1000000 5000000
 
 The resulting output files (XLSX and heatmap) can be found here:
 
