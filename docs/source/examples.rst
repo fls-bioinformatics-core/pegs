@@ -50,9 +50,9 @@ PEGS analysis
     pegs mm10 \
       data/peaks/ data/clusters/
       1000 5000 10000 50000 100000 200000 500000 1000000 5000000\
-      --tads $EXAMPLE_DIR/data/mESC-TADs_mm10.txt \
+      --tads data/mESC-TADs_mm10.txt \
       --name glucocorticoid \
-      -o $EXAMPLE_DIR/results
+      -o results/
 
 This outputs a PNG heatmap
 :download:`glucocorticoid_heatmap.png <examples/glucocorticoid_heatmap.png>`:
