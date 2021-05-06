@@ -15,4 +15,5 @@ cluster enrichments from peak data at different genomic distances.
    inputs
    outputs
    mk_pegs_intervals
+   examples
    known_problems
