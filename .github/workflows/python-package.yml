@@ -36,5 +36,5 @@ jobs:
         pytest
     - name: Run test example scripts
       run: |
-        python -m pip install ./pegs
+        python -m pip install .
         sh examples/testing/run_examples.sh
