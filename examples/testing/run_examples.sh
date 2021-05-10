@@ -42,7 +42,7 @@ run_test() {
     # --rename OLD NEW: rename file OLD to NEW before
     #                checking
     # --skip:        don't run the test
-    local test_name=$1
+    local test_name="$1"
     local command=
     local expected_outputs=
     local check_exists=
