@@ -5,6 +5,7 @@ import tempfile
 import os
 import shutil
 import numpy as np
+import atexit
 
 from pegs.pegs import make_expanded_bed
 from pegs.pegs import get_overlapping_genes
@@ -12,6 +13,58 @@ from pegs.pegs import get_tads_overlapping_peaks
 from pegs.pegs import calculate_enrichment
 from pegs.pegs import calculate_enrichments
 from pegs.pegs import pegs_main
+from pegs.utils import find_exe
+from pegs.bedtools import fetch_bedtools
+
+# Module-level globals for managing bedtools install
+BEDTOOLS_INSTALL_DIR = None
+PATH_NO_BEDTOOLS = None
+DESTROY_AT_EXIT = False
+
+# Ensure that bedtools is available
+def ensure_bedtools():
+    # Globals
+    global BEDTOOLS_INSTALL_DIR
+    global PATH_NO_BEDTOOLS
+    global DESTROY_AT_EXIT
+    # Check if bedtools is already available
+    if find_exe("bedtools"):
+        return
+    # Install bedtools in temp directory
+    if BEDTOOLS_INSTALL_DIR is None:
+        bedtools_install_dir = tempfile.mkdtemp()
+        fetch_bedtools(install_dir=bedtools_install_dir,
+                       create_install_dir=False)
+        BEDTOOLS_INSTALL_DIR = bedtools_install_dir
+        print("Installed bedtools in %s" % BEDTOOLS_INSTALL_DIR)
+    # Append bedtools to the PATH
+    if PATH_NO_BEDTOOLS is None:
+        PATH_NO_BEDTOOLS = os.environ['PATH']
+        os.environ['PATH'] = "%s%s%s" % (os.environ['PATH'],
+                                         os.pathsep,
+                                         BEDTOOLS_INSTALL_DIR)
+    # Remove temporary bedtools install on exit
+    if not DESTROY_AT_EXIT:
+        atexit.register(remove_bedtools)
+        DESTROY_AT_EXIT = True
+
+# Restore the PATH to remove temporary bedtools
+def restore_path():
+    global PATH_NO_BEDTOOLS
+    if PATH_NO_BEDTOOLS:
+        os.environ['PATH'] = PATH_NO_BEDTOOLS
+        PATH_NO_BEDTOOLS = None
+
+# Remove the temporary bedtools install
+def remove_bedtools():
+    global BEDTOOLS_INSTALL_DIR
+    if BEDTOOLS_INSTALL_DIR:
+        try:
+            print("Removing bedtools dir %s" % BEDTOOLS_INSTALL_DIR)
+            shutil.rmtree(BEDTOOLS_INSTALL_DIR)
+        except Exception:
+            pass
+        BEDTOOLS_INSTALL_DIR = None
 
 class TestMakeExpandedBed(unittest.TestCase):
     def setUp(self):
@@ -44,10 +97,14 @@ chr1	73352131	73372563
 
 class TestGetOverlappingGenes(unittest.TestCase):
     def setUp(self):
+        ensure_bedtools()
+        if not find_exe("bedtools"):
+            self.skipTest("bedtools not found")
         self.test_dir = tempfile.mkdtemp()
     def tearDown(self):
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        restore_path()
     def test_get_overlapping_genes(self):
         """
         get_overlapping_genes: returns set of gene names
@@ -100,10 +157,14 @@ chr1	73362131	73362563
 
 class TestGetTadsOverlappingPeaks(unittest.TestCase):
     def setUp(self):
+        ensure_bedtools()
+        if not find_exe("bedtools"):
+            self.skipTest("bedtools not found")
         self.test_dir = tempfile.mkdtemp()
     def tearDown(self):
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        restore_path()
     def test_get_tads_overlapping_peaks(self):
         """
         get_tads_overlapping_peaks: return overlapping TADs
@@ -132,10 +193,14 @@ chr1	136212828	146212829	TAD4
 
 class TestCalculateEnrichment(unittest.TestCase):
     def setUp(self):
+        ensure_bedtools()
+        if not find_exe("bedtools"):
+            self.skipTest("bedtools not found")
         self.test_dir = tempfile.mkdtemp()
     def tearDown(self):
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        restore_path()
     def test_calculate_enrichment(self):
         """
         calculate_enrichment: check calculated p-values and counts
@@ -185,10 +250,14 @@ chr1	73362131	73362563
 
 class TestCalculateEnrichments(unittest.TestCase):
     def setUp(self):
+        ensure_bedtools()
+        if not find_exe("bedtools"):
+            self.skipTest("bedtools not found")
         self.test_dir = tempfile.mkdtemp()
     def tearDown(self):
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        restore_path()
     def test_calculate_enrichments(self):
         """
         calculate_enrichments: check calculated p-values and counts
@@ -330,10 +399,14 @@ chr1	136212828	146212829	TAD4
 
 class TestPegsMain(unittest.TestCase):
     def setUp(self):
+        ensure_bedtools()
+        if not find_exe("bedtools"):
+            self.skipTest("bedtools not found")
         self.test_dir = tempfile.mkdtemp()
     def tearDown(self):
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
+        restore_path()
     def test_pegs_main(self):
         """
         pegs_main: generates heatmap and XLSX files
