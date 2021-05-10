@@ -10,7 +10,7 @@ MK_PEGS_INTERVALS="$(dirname $(which $PEGS))/mk_pegs_intervals"
 _PASSED=0
 _FAILED=0
 _SKIPPED=0
-function report_tests {
+report_tests() {
     # Report summary of tests passed and failed
     local n_tests=$((_PASSED+_FAILED))
     echo "---------------------------------------------------------"
@@ -25,7 +25,7 @@ function report_tests {
 	return 0
     fi
 }
-function run_test {
+run_test() {
     # Run a command and check outputs
     # Takes following arguments:
     # --command CMD: specify the command to execute
@@ -193,7 +193,7 @@ function run_test {
     echo "---------------------------------------------------------"
     echo "TEST: $test_name: $test_status"
 }
-function assert_equal {
+assert_equal() {
     # Check two files are the same
     local strip_paths=
     if [ "$3" == "--strip-paths" ] ; then
