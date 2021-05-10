@@ -35,7 +35,7 @@ example:
 
 ::
 
-    pip install pegs-0.4.0.tgz
+    pip install pegs-0.4.1.tgz
 
 The simplest use of the program is:
 

@@ -2,6 +2,18 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.4.1 (2021-05-10)
+--------------------------
+
+* Fixes to the 'quick start' and 'licensing' sections of
+  the ``README``
+* Add worked example using mouse glucocorticoidal data to
+  the ``README`` and the documentation.
+* Update requirement for Pillow library to 8.1.1.
+* Fix unit tests and add continuous integration testing
+  workflow in Github Actions.
+
+--------------------------
 Version 0.4.0 (2020-08-18)
 --------------------------
 
