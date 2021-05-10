@@ -27,6 +27,12 @@ from builtins import str
 import io
 import os
 import numpy as np
+# Deal with matplotlib backend
+# See https://stackoverflow.com/a/50089385/579925
+import matplotlib
+if os.environ.get('DISPLAY','') == '':
+   print('No display found: using non-interactive Agg backend')
+   matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import xlsxwriter
