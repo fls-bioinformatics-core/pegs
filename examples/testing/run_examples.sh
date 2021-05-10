@@ -165,7 +165,7 @@ run_test() {
     fi
     echo test_status: $test_status
     # Report logs from failed job
-    if [ $test_status == FAILED ] ; then
+    if [ $test_status = FAILED ] ; then
 	for f in STDOUT STDERR ; do
 	    if [ -e $f ] ; then
 		echo "===== $test_name: $f ====="
@@ -196,7 +196,7 @@ run_test() {
 assert_equal() {
     # Check two files are the same
     local strip_paths=
-    if [ "$3" == "--strip-paths" ] ; then
+    if [ "$3" = "--strip-paths" ] ; then
 	strip_paths=yes
     fi
     if [ ! -e $1 ] ; then
@@ -228,7 +228,7 @@ assert_equal() {
 #
 # Initialise and set up dir for test outputs
 TEST_DIR=$(dirname $0)
-if [ "$TEST_DIR" == "." ] ; then
+if [ "$TEST_DIR" = "." ] ; then
     TEST_DIR=$(pwd)
 elif [ -z "$(echo $TEST_DIR | grep ^/)" ] ; then
     TEST_DIR=$(pwd)/$TEST_DIR
