@@ -34,3 +34,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Run test example scripts
+      run: |
+        sh examples/testing/run_examples.sh
