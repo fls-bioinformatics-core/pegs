@@ -10,7 +10,7 @@ MK_PEGS_INTERVALS="$(dirname $(which $PEGS))/mk_pegs_intervals"
 _PASSED=0
 _FAILED=0
 _SKIPPED=0
-function report_tests {
+report_tests() {
     # Report summary of tests passed and failed
     local n_tests=$((_PASSED+_FAILED))
     echo "---------------------------------------------------------"
@@ -25,7 +25,7 @@ function report_tests {
 	return 0
     fi
 }
-function run_test {
+run_test() {
     # Run a command and check outputs
     # Takes following arguments:
     # --command CMD: specify the command to execute
@@ -42,7 +42,7 @@ function run_test {
     # --rename OLD NEW: rename file OLD to NEW before
     #                checking
     # --skip:        don't run the test
-    local test_name=$1
+    local test_name="$1"
     local command=
     local expected_outputs=
     local check_exists=
@@ -165,7 +165,7 @@ function run_test {
     fi
     echo test_status: $test_status
     # Report logs from failed job
-    if [ $test_status == FAILED ] ; then
+    if [ $test_status = FAILED ] ; then
 	for f in STDOUT STDERR ; do
 	    if [ -e $f ] ; then
 		echo "===== $test_name: $f ====="
@@ -193,10 +193,10 @@ function run_test {
     echo "---------------------------------------------------------"
     echo "TEST: $test_name: $test_status"
 }
-function assert_equal {
+assert_equal() {
     # Check two files are the same
     local strip_paths=
-    if [ "$3" == "--strip-paths" ] ; then
+    if [ "$3" = "--strip-paths" ] ; then
 	strip_paths=yes
     fi
     if [ ! -e $1 ] ; then
@@ -228,7 +228,7 @@ function assert_equal {
 #
 # Initialise and set up dir for test outputs
 TEST_DIR=$(dirname $0)
-if [ "$TEST_DIR" == "." ] ; then
+if [ "$TEST_DIR" = "." ] ; then
     TEST_DIR=$(pwd)
 elif [ -z "$(echo $TEST_DIR | grep ^/)" ] ; then
     TEST_DIR=$(pwd)/$TEST_DIR
