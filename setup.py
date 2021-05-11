@@ -41,7 +41,6 @@ setup(
     "calculating enrichments of gene cluster enrichments from peak data " \
     "at different genomic distances",
     url = 'https://github.com/fls-bioinformatics-core/pegs',
-    ##download_url = download_url,
     author = 'Mudassar Iqbal, Peter Briggs',
     maintainer = 'Peter Briggs',
     maintainer_email = 'peter.briggs@manchester.ac.uk',
