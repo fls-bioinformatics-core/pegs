@@ -6,6 +6,15 @@ PEGS: Peak-set Enrichment of Gene-Sets
 a Python bioinformatics utility for calculating enrichments of gene
 clusters at different genomic distances from peaks.
 
+.. image:: https://readthedocs.org/projects/pegs/badge/?version=latest
+   :target: https://pegs.readthedocs.io/
+
+.. image:: https://badge.fury.io/py/pegs.svg
+   :target: https://pypi.python.org/pypi/pegs/
+
+.. image:: https://github.com/fls-bioinformatics-core/pegs/workflows/Python%20package/badge.svg
+   :target: https://github.com/fls-bioinformatics-core/pegs/actions?query=workflow%3A%22Python+package%22
+
 * Free software: 3-Clause BSD License
 * Documentation: https://pegs.readthedocs.io/en/latest/
 * Code: https://github.com/fls-bioinformatics-core/pegs
@@ -14,30 +23,16 @@ clusters at different genomic distances from peaks.
 Quick Start
 -----------
 
-The recommended way to get started with ``PEGS`` is to download
-the latest version from the "releases" page on GitHub:
+It is recommended to install ``PEGS`` via ``pip`` in a virtualenv,
+for example::
 
-https://github.com/fls-bioinformatics-core/pegs/releases
+    % virtualenv venv.pegs
+    % source venv.pegs/bin/activate
+    % pip install pegs
 
-and create a Python virtual environment, to install the software
-into using the ``pip`` utility.
+This will provide the ``pegs`` and ``mk_pegs_intervals`` programs.
 
-For example: to create and activate a virtual environment called
-``venv.pegs`` using the ``virtualenv`` utility:
-
-::
-
-    virtualenv venv.pegs
-    source venv.pegs/bin/activate
-
-The ``PEGS`` package can then be installed using ``pip``, for
-example:
-
-::
-
-    pip install pegs-0.4.2.tgz
-
-The simplest use of the program is:
+The simplest use of ``PEGS`` is:
 
 ::
 
@@ -64,6 +59,8 @@ PEGS is licensed under the 3-Clause BSD License.
 ---------------------------------------
 Example: Mouse glucocorticoidal dataset
 ---------------------------------------
+
+*Thanks to Louise Hunter for providing this example.*
 
 An example application of ``PEGS`` is the analysis of up- and
 down-regulated glucocorticoidal targets from an RNA-seq study
@@ -107,11 +104,6 @@ distances up to 500kbp from these peaks, but no evidence of
 down-regulated genes - indicating distinct mechanisms of gene
 activation and repression by glucocorticoids. At the same time,
 there is promoter proximal enrichment for both up-and
-down-regulated genes in the DHSs.
-
-**Acknowledgement**
-
-Thanks to Louise Hunter for providing this example.
 
 **References**
 
@@ -125,3 +117,11 @@ Thanks to Louise Hunter for providing this example.
   **359(6381)**:1274-1277
 * Sobel, J.A. *et al.* (2017) Transcriptional regulatory logic of the
   diurnal cycle in the mouse liver. *PLoS Biol* **15(4)**: e2001069
+
+----------------
+Acknowledgements
+----------------
+
+Thanks to Louise Hunter for providing the mouse glucocorticoidal
+example, and to Kyle Pollina for allowing us to use the ``pegs``
+name on the Python Package Index.
