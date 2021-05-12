@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     bedtools.py: utility functions for bedtools in PEGS
-#     Copyright (C) University of Manchester 2020 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2020-2021 Mudassar Iqbal, Peter Briggs
 #
 
 #######################################################################
@@ -11,13 +11,8 @@
 import os
 import io
 import shutil
-try:
-    from urllib.request import urlopen
-    from urllib.error import URLError
-except ImportError:
-    # Failed to get Python3 urlopen, fallback to Python2
-    from urllib2 import urlopen
-    from urllib2 import URLError
+from urllib.request import urlopen
+from urllib.error import URLError
 import tempfile
 import subprocess
 import logging
