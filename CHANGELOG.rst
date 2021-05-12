@@ -2,6 +2,13 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.4.2 (2021-05-12)
+--------------------------
+
+* Updates to ``setup.py`` to enable distributions to be
+  built for upload to the Python Package Index (PyPI).
+
+--------------------------
 Version 0.4.1 (2021-05-10)
 --------------------------
 
