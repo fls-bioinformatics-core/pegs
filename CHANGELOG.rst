@@ -2,6 +2,13 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.5.1 (2021-05-12)
+--------------------------
+
+* Patches to fix display of ``README`` landing page on
+  PyPI and include the changelog in the documentation.
+
+--------------------------
 Version 0.5.0 (2021-05-12)
 --------------------------
 
