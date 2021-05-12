@@ -96,7 +96,7 @@ The resulting output files (XLSX and heatmap) can be found here:
  * `glucocorticoid_heatmap.png <examples/glucocorticoid_example/results/glucocorticoid_heatmap.png>`_
  * `glucocorticoid_results.xlsx <examples/glucocorticoid_example/results/glucocorticoid_results.xlsx>`_
 
-.. image:: examples/glucocorticoid_example/results/glucocorticoid_heatmap.png
+.. image:: https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/results/glucocorticoid_heatmap.png
 
 The analyses indicate a strong association of dexamethasone
 up-regulated genes with dexamethasone-induced GR peaks at
