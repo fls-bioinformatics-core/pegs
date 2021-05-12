@@ -7,11 +7,11 @@ import codecs
 import os.path
 
 # Installation requirements
-install_requires = ['numpy==1.16',
-                    'scipy==1.1.0',
-                    'matplotlib==2.2.3',
+install_requires = ['numpy==1.19.5',
+                    'scipy==1.5.4',
+                    'matplotlib==3.3.4',
                     'pillow==8.1.1',
-                    'seaborn==0.9.0',
+                    'seaborn==0.11.1',
                     'xlsxwriter >= 0.8.4',
                     'pathlib2',
                     'future',]
