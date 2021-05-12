@@ -13,8 +13,7 @@ install_requires = ['numpy==1.19.5',
                     'pillow==8.1.1',
                     'seaborn==0.11.1',
                     'xlsxwriter >= 0.8.4',
-                    'pathlib2',
-                    'future',]
+                    'pathlib2']
 
 # Acquire package version for installation
 # (see https://packaging.python.org/guides/single-sourcing-package-version/)
