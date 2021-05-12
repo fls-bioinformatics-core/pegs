@@ -7,8 +7,8 @@ import codecs
 import os.path
 
 # Installation requirements
-install_requires = ['numpy==1.16',
-                    'scipy==1.1.0',
+install_requires = ['numpy==1.19.5',
+                    'scipy==1.5.4',
                     'matplotlib==2.2.3',
                     'pillow==8.1.1',
                     'seaborn==0.9.0',
