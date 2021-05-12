@@ -2,6 +2,20 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.5.0 (2021-05-12)
+--------------------------
+
+* Added support for Python 3.9.
+* Dropped support for Python 2.7.
+* Fixed bug with automatic installation of ``bedtools``
+  (was failing on some systems).
+* Updated versions of dependencies: ``numpy`` (1.19.5),
+  ``scipy`` (1.5.4), ``matplotlib`` (3.3.4) and
+  ``seaborn`` (0.11.1).
+* Update to installation information to indicate that
+  ``PEGS`` can be installed directly from PyPI.
+
+--------------------------
 Version 0.4.2 (2021-05-12)
 --------------------------
 
