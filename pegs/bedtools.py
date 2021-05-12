@@ -10,6 +10,7 @@
 
 import os
 import io
+import shutil
 try:
     from urllib.request import urlopen
     from urllib.error import URLError
@@ -111,7 +112,10 @@ def fetch_bedtools(install_dir,create_install_dir=False):
     # Install bedtools
     print("...installing 'bedtools' into %s" % install_dir)
     try:
-        os.rename(tmp_bedtools,os.path.join(install_dir,"bedtools"))
+        # Use copy/remove instead of os.rename as latter can't
+        # move files across different devices
+        shutil.copy(tmp_bedtools,os.path.join(install_dir,"bedtools"))
+        os.remove(tmp_bedtools)
     except Exception as ex:
         # Failed to move to installation directory
         logging.error("Couldn't move 'bedtools' to '%s': %s" %
