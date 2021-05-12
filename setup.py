@@ -33,13 +33,14 @@ def get_version(rel_path):
 
 PEGS_VERSION = get_version("pegs/__init__.py")
 
+# Get long description from the project README
+readme = read('README.rst')
+
 setup(
     name = "pegs",
     version = PEGS_VERSION,
     description = "Peak-set Enrichment of Gene-Sets (PEGS)",
-    long_description = "PEGS is a Python bioinformatics utility for " \
-    "calculating enrichments of gene cluster enrichments from peak data " \
-    "at different genomic distances",
+    long_description = readme,
     url = 'https://github.com/fls-bioinformatics-core/pegs',
     author = 'Mudassar Iqbal, Peter Briggs',
     maintainer = 'Peter Briggs',
