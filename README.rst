@@ -60,6 +60,8 @@ PEGS is licensed under the 3-Clause BSD License.
 Example: Mouse glucocorticoidal dataset
 ---------------------------------------
 
+*Thanks to Louise Hunter for providing this example.*
+
 An example application of ``PEGS`` is the analysis of up- and
 down-regulated glucocorticoidal targets from an RNA-seq study
 of liver samples from mice treated acutely with dexamethasone
@@ -102,11 +104,6 @@ distances up to 500kbp from these peaks, but no evidence of
 down-regulated genes - indicating distinct mechanisms of gene
 activation and repression by glucocorticoids. At the same time,
 there is promoter proximal enrichment for both up-and
-down-regulated genes in the DHSs.
-
-**Acknowledgement**
-
-Thanks to Louise Hunter for providing this example.
 
 **References**
 
@@ -120,3 +117,11 @@ Thanks to Louise Hunter for providing this example.
   **359(6381)**:1274-1277
 * Sobel, J.A. *et al.* (2017) Transcriptional regulatory logic of the
   diurnal cycle in the mouse liver. *PLoS Biol* **15(4)**: e2001069
+
+----------------
+Acknowledgements
+----------------
+
+Thanks to Louise Hunter for providing the mouse glucocorticoidal
+example, and to Kyle Pollina for allowing us to use the ``pegs``
+name on the Python Package Index.
