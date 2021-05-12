@@ -74,14 +74,14 @@ boundary data (Kim *et al.* 2018).
 The files for these datasets are available here:
 
  * RNA-seq data:
-   `1_zt6up.txt <examples/glucocorticoid_example/data/clusters/1_zt6up.txt>`_
-   and `2_zt6down.txt <examples/glucocorticoid_example/data/clusters/2_zt6down.txt>`_
+   `1_zt6up.txt <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/data/clusters/1_zt6up.txt>`_
+   and `2_zt6down.txt <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/data/clusters/2_zt6down.txt>`_
  * ChIP-seq and chromatin accessibility data:
-   `Grontved_GR_ChIP.bed <examples/glucocorticoid_example/data/peaks/Grontved_GR_ChIP.bed>`_
+   `Grontved_GR_ChIP.bed <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/data/peaks/Grontved_GR_ChIP.bed>`_
    and
-   `ZT6_DNase.bed <examples/glucocorticoid_example/data/peaks/ZT6_DNase.bed>`_
+   `ZT6_DNase.bed <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/data/peaks/ZT6_DNase.bed>`_
  * TAD boundary data:
-   `mESC-TADs_mm10.txt <examples/glucocorticoid_example/data/mESC-TADs_mm10.txt>`_
+   `mESC-TADs_mm10.txt <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/data/mESC-TADs_mm10.txt>`_
 
 The ``PEGS`` analysis was performed on these data using the
 command::
@@ -93,8 +93,8 @@ command::
 
 The resulting output files (XLSX and heatmap) can be found here:
 
- * `glucocorticoid_heatmap.png <examples/glucocorticoid_example/results/glucocorticoid_heatmap.png>`_
- * `glucocorticoid_results.xlsx <examples/glucocorticoid_example/results/glucocorticoid_results.xlsx>`_
+ * `glucocorticoid_heatmap.png <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/results/glucocorticoid_heatmap.png>`_
+ * `glucocorticoid_results.xlsx <https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/results/glucocorticoid_results.xlsx>`_
 
 .. image:: https://raw.githubusercontent.com/fls-bioinformatics-core/pegs/master/examples/glucocorticoid_example/results/glucocorticoid_heatmap.png
 
