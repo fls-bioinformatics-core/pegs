@@ -191,11 +191,11 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
 
     # Set the fontsize for the tick labels
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(X_TICK_LABEL_FONT_SIZE)
-        tick.label.set_rotation('horizontal')
+        tick.label1.set_fontsize(X_TICK_LABEL_FONT_SIZE)
+        tick.label1.set_rotation('horizontal')
     for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(Y_TICK_LABEL_FONT_SIZE)
-        tick.label.set_rotation('horizontal')
+        tick.label1.set_fontsize(Y_TICK_LABEL_FONT_SIZE)
+        tick.label1.set_rotation('horizontal')
 
     # Deal with the colorbar
     cbar_ax.yaxis.label.set_size(AXIS_LABEL_FONT_SIZE)
@@ -232,11 +232,11 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
 
         # Set the fontsize for the tick labels
         for tick in tads_ax.xaxis.get_major_ticks():
-            tick.label.set_fontsize(X_TICK_LABEL_FONT_SIZE)
-            tick.label.set_rotation('horizontal')
+            tick.label1.set_fontsize(X_TICK_LABEL_FONT_SIZE)
+            tick.label1.set_rotation('horizontal')
         for tick in tads_ax.yaxis.get_major_ticks():
-            tick.label.set_fontsize(Y_TICK_LABEL_FONT_SIZE)
-            tick.label.set_rotation('horizontal')
+            tick.label1.set_fontsize(Y_TICK_LABEL_FONT_SIZE)
+            tick.label1.set_rotation('horizontal')
 
         # Colorbar
         tads_cbar_ax.yaxis.label.set_size(AXIS_LABEL_FONT_SIZE)
