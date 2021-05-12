@@ -23,30 +23,16 @@ clusters at different genomic distances from peaks.
 Quick Start
 -----------
 
-The recommended way to get started with ``PEGS`` is to download
-the latest version from the "releases" page on GitHub:
+It is recommended to install ``PEGS`` via ``pip`` in a virtualenv,
+for example::
 
-https://github.com/fls-bioinformatics-core/pegs/releases
+    % virtualenv venv.pegs
+    % source venv.pegs/bin/activate
+    % pip install pegs
 
-and create a Python virtual environment, to install the software
-into using the ``pip`` utility.
+This will provide the ``pegs`` and ``mk_pegs_intervals`` programs.
 
-For example: to create and activate a virtual environment called
-``venv.pegs`` using the ``virtualenv`` utility:
-
-::
-
-    virtualenv venv.pegs
-    source venv.pegs/bin/activate
-
-The ``PEGS`` package can then be installed using ``pip``, for
-example:
-
-::
-
-    pip install pegs-0.4.2.tgz
-
-The simplest use of the program is:
+The simplest use of ``PEGS`` is:
 
 ::
 
