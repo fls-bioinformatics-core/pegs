@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     cli.py: CLI for gene cluster enrichment analysis
-#     Copyright (C) University of Manchester 2018-2020 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2018-2021 Mudassar Iqbal, Peter Briggs
 #
 from builtins import str
 import os
@@ -94,8 +94,11 @@ def pegs():
                                 dest="output_heatmap",
                                 action="store",
                                 default=None,
-                                help="destination for output heatmap PNG "
-                                "(default: 'BASENAME_heatmap.png')")
+                                help="destination for output heatmap; "
+                                "image format is implicitly determined by "
+                                "the file extension (e.g. '.png','.svg' "
+                                "etc) unless overridden by the --format "
+                                "option (default: 'BASENAME_heatmap.FORMAT')")
     output_options.add_argument("-x",metavar="XLSX",
                                 dest="output_xlsx",
                                 action="store",
@@ -105,6 +108,15 @@ def pegs():
                                 "'BASENAME_results.xlsx')")
     heatmap_options = p.add_argument_group("Heatmap options")
     g = heatmap_options.add_mutually_exclusive_group()
+    g.add_argument("--format",
+                   dest="heatmap_format",
+                   metavar="FORMAT",
+                   action="store",
+                   default = None,
+                   help="explicitly specify the image format for the "
+                   "output heatmap; note that if this option is specified "
+                   "then it will override the format implied by the "
+                   "specified with the -m option (default: 'png')")
     g.add_argument("--color",
                    dest="heatmap_color",
                    metavar="COLOR",
@@ -240,6 +252,7 @@ Authors: Mudassar Iqbal, Peter Briggs
               keep_intersection_files=
               args.keep_intersection_files,
               heatmap_cmap=heatmap_cmap,
+              heatmap_format=args.heatmap_format,
               dump_raw_data=args.dump_raw_data)
 
 def mk_pegs_intervals():
