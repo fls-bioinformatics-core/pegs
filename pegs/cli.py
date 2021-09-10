@@ -107,16 +107,31 @@ def pegs():
                                 "with the raw enrichment data (default: "
                                 "'BASENAME_results.xlsx')")
     heatmap_options = p.add_argument_group("Heatmap options")
+    heatmap_options.add_argument("--format",
+                                 dest="heatmap_format",
+                                 metavar="FORMAT",
+                                 action="store",
+                                 default = None,
+                                 help="explicitly specify the image format "
+                                 "for the output heatmap; note that if this "
+                                 "option is specified then it will override "
+                                 "the format implied by the specified with "
+                                 "the -m option (default: 'png')")
+    heatmap_options.add_argument("--x-label",
+                                 metavar="CLUSTERS_AXIS_LABEL",
+                                 dest="clusters_axis_label",
+                                 action="store",
+                                 default=None,
+                                 help="set a custom label for the X "
+                                 "(clusters) axis")
+    heatmap_options.add_argument("--y-label",
+                                 metavar="PEAKSETS_AXIS_LABEL",
+                                 dest="peaksets_axis_label",
+                                 action="store",
+                                 default=None,
+                                 help="set a custom label for the Y "
+                                 "(peak sets) axis")
     g = heatmap_options.add_mutually_exclusive_group()
-    g.add_argument("--format",
-                   dest="heatmap_format",
-                   metavar="FORMAT",
-                   action="store",
-                   default = None,
-                   help="explicitly specify the image format for the "
-                   "output heatmap; note that if this option is specified "
-                   "then it will override the format implied by the "
-                   "specified with the -m option (default: 'png')")
     g.add_argument("--color",
                    dest="heatmap_color",
                    metavar="COLOR",
@@ -260,6 +275,8 @@ Authors: Mudassar Iqbal, Peter Briggs
               output_directory=args.output_directory,
               keep_intersection_files=
               args.keep_intersection_files,
+              clusters_axis_label=args.clusters_axis_label,
+              peaksets_axis_label=args.peaksets_axis_label,
               heatmap_cmap=heatmap_cmap,
               heatmap_format=args.heatmap_format,
               dump_raw_data=args.dump_raw_data)

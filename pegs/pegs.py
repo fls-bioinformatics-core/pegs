@@ -287,6 +287,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
               tads_file,name,heatmap=None,xlsx=None,
               output_directory=None,
               keep_intersection_files=False,
+              clusters_axis_label=None,peaksets_axis_label=None,
               heatmap_cmap=None,heatmap_format=None,
               bedtools_exe="bedtools",dump_raw_data=False):
     """
@@ -306,6 +307,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         (defaults to current directory if not specified)
       keep_intersection_files (bool): if True then keep the intermediate
         intersection files from bedtools
+      clusters_axis_label (str): custom label for the x-axis
+      peaksets_axis_label (str): custom label for the y-axis
       heatmap_cmap (cmap): non-default colormap to use when creating
         the heatmaps
       heatmap_format (str): image format for output heatmaps
@@ -397,6 +400,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
     make_heatmap(heatmap,peaks,clusters,distances,
                  pvalues,counts,tads_pvalues=tads_pvalues,
                  tads_counts=tads_counts,
+                 clusters_axis_label=clusters_axis_label,
+                 peaksets_axis_label=peaksets_axis_label,
                  heatmap_cmap=heatmap_cmap,
                  heatmap_format=heatmap_format)
 
