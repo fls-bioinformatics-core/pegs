@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     outputs.py: functions for outputting result data
-#     Copyright (C) University of Manchester 2018-2020 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2018-2021 Mudassar Iqbal, Peter Briggs
 #
 
 #######################################################################
@@ -45,7 +45,8 @@ from os.path import splitext
 #######################################################################
 
 def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
-                 tads_pvalues=None,tads_counts=None,heatmap_cmap=None):
+                 tads_pvalues=None,tads_counts=None,heatmap_cmap=None,
+                 heatmap_format=None):
     """
     Generate a heatmap from enrichment data
 
@@ -64,6 +65,7 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
         from enrichment calculation (None if TADs not included)
       heatmap_cmap (cmap): optional, colormap to use when plotting
         the heatmaps
+      heatmap_format (str): optional, image format for output heatmaps
     """
     # Convenience variables
     n_peaks = len(peaks)
@@ -248,7 +250,7 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
     ax.set_xlabel("RNA-seq Clusters",fontsize=AXIS_LABEL_FONT_SIZE)
 
     # Save to file
-    fig.savefig(heatmap_file)
+    fig.savefig(heatmap_file,format=heatmap_format)
 
 def make_xlsx_file(xlsx_file,peaks,clusters,distances,pvalues,counts,
                    tads_pvalues=None,tads_counts=None):

@@ -27,7 +27,7 @@ where:
 counts) using a default set of genomic distances around the
 input intervals in each of the peak-sets.
 
-By default the program outputs a heatmap (PNG file) called
+By default the program outputs a PNG heatmap called
 ``pegs_heatmap.png``, and an XLSX file with the p-values and
 count data called ``pegs_results.xlsx``.
 
@@ -76,8 +76,13 @@ the output files will be called ``pegs_heatmap.png`` and
 ``pegs_results.xlsx``.
 
 The names for these output files can also be set explicitly
-using the ``-m`` option (sets the file name for the heatmap)
-and ``-x`` option (sets the file name for the XLSX file).
+using the ``-m`` and ``-x`` options:
+
+ * ``-m``: sets the heatmap file name and image format
+   (based on the file extension, e.g. ``my_heatmap.png``
+   will produce a PNG image, ``my_heatmap.svg`` will
+   produce an SVG etc)
+ * ``-x``: sets the file name for the XLSX file
 
 .. note::
 

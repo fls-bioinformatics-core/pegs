@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     pegs.py: core functionality for Peak-set Enrichment of Gene-Sets
-#     Copyright (C) University of Manchester 2018-2020 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2018-2021 Mudassar Iqbal, Peter Briggs
 #
 
 #######################################################################
@@ -287,8 +287,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
               tads_file,name,heatmap=None,xlsx=None,
               output_directory=None,
               keep_intersection_files=False,
-              heatmap_cmap=None,bedtools_exe="bedtools",
-              dump_raw_data=False):
+              heatmap_cmap=None,heatmap_format=None,
+              bedtools_exe="bedtools",dump_raw_data=False):
     """
     Driver function for enrichment calculation
 
@@ -300,7 +300,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
       clusters_dir (str): path to directory with cluster files
       tads_file (str): path to BED file with TADs
       name (str): basename to use for output files
-      heatmap (str): path for output heatmap PNG file
+      heatmap (str): path for output heatmap image file
       xlsx (str): path for output XLSX file with raw data
       output_directory (str): directory to write output files to
         (defaults to current directory if not specified)
@@ -308,6 +308,7 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
         intersection files from bedtools
       heatmap_cmap (cmap): non-default colormap to use when creating
         the heatmaps
+      heatmap_format (str): image format for output heatmaps
       bedtools_exe (str): 'bedtools' executable to use
       dump_raw_data (bool): if True then save the raw enrichment data
         to file (for debugging purposes)
@@ -370,7 +371,9 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
 
     # Path to the output heatmap
     if heatmap is None:
-        heatmap = "%s_heatmap.png" % name
+        if not heatmap_format:
+            heatmap_format = "png"
+        heatmap = "%s_heatmap.%s" % (name,heatmap_format)
     heatmap = os.path.join(output_directory,heatmap)
 
     # Path to the output XLSX
@@ -394,7 +397,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
     make_heatmap(heatmap,peaks,clusters,distances,
                  pvalues,counts,tads_pvalues=tads_pvalues,
                  tads_counts=tads_counts,
-                 heatmap_cmap=heatmap_cmap)
+                 heatmap_cmap=heatmap_cmap,
+                 heatmap_format=heatmap_format)
 
     # Write data to spreadsheet
     print("====Writing XLSX file====")

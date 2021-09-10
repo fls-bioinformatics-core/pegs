@@ -314,6 +314,21 @@ run_test "pegs: customise heatmap palette options" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \
     --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters --heatmap-palette start=2 reverse=True"
 #
+# pegs specifying non-default heatmap name
+run_test "pegs: specify non-default name for heatmap" \
+    --must_exist "my_heatmap.svg pegs_results.xlsx" \
+    --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters -m my_heatmap.svg"
+#
+# pegs specifying non-default heatmap name and image format
+run_test "pegs: specify non-default name and image format for heatmap" \
+    --must_exist "my_heatmap.svg pegs_results.xlsx" \
+    --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters -m my_heatmap.svg --format svg"
+#
+# pegs specifying non-default heatmap image format
+run_test "pegs: specify non-default image format for heatmap" \
+    --must_exist "pegs_heatmap.svg pegs_results.xlsx" \
+    --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters --format svg"
+#
 # pegs specifying custom color scheme for heatmap
 run_test "pegs: specify alternative colour scheme for heatmap" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \
