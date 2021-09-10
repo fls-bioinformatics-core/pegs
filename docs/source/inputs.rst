@@ -8,7 +8,7 @@ Reference gene intervals file
 The gene intervals file contains the  reference transcription
 start sites (TSSs) for all genes as BED interval data.
 
-There are two built-in gene interval BED files (human``hg38`` and
+There are two built-in gene interval BED files (human ``hg38`` and
 mouse ``mm10`` genomes) which have been generated from the refGene data
 downloaded from the UCSC table browser on 12th July 2019.
 These can be used when running ``PEGS`` by specifying the genome

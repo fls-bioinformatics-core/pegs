@@ -33,8 +33,9 @@ distance/bounary defined in the TADs BED file). For example:
    :alt: Example heatmap with TADs from PEGS
 
 By default the heatmap is output as a PNG image, however this
-can be changed - along with other properties of the heatmap -
-as described in :ref:`customising_the_heatmap`.
+can be changed (along with other properties of the heatmap such
+as colours and axis labels) as described in
+:ref:`customising_the_heatmap`.
 
 XLSX file
 =========
