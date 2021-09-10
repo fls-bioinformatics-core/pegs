@@ -8,6 +8,9 @@
 # Constants
 #######################################################################
 
+# Default axis labels
+CLUSTERS_AXIS_LABEL = "RNA-seq Clusters"
+PEAKSETS_AXIS_LABEL = "Peak Sets and Intervals"
 # Sets font size for heatmap annotation
 ANNOTATION_FONT_SIZE = 16
 # Sets font size for peakset names associated with distances
@@ -45,8 +48,10 @@ from os.path import splitext
 #######################################################################
 
 def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
-                 tads_pvalues=None,tads_counts=None,heatmap_cmap=None,
-                 heatmap_format=None):
+                 tads_pvalues=None,tads_counts=None,
+                 clusters_axis_label=None,
+                 peaksets_axis_label=None,
+                 heatmap_cmap=None,heatmap_format=None):
     """
     Generate a heatmap from enrichment data
 
@@ -63,10 +68,18 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
         enrichment calculation (None if TADs not included)
       tads_counts (numpy.array): Numpy array with TADs gene counts
         from enrichment calculation (None if TADs not included)
+      clusters_axis_label (str): custom label for the x-axis
+      peaksets_axis_label (str): custom label for the y-axis
       heatmap_cmap (cmap): optional, colormap to use when plotting
         the heatmaps
       heatmap_format (str): optional, image format for output heatmaps
     """
+    # Defaults for axis labels
+    if clusters_axis_label is None:
+       clusters_axis_label = CLUSTERS_AXIS_LABEL
+    if peaksets_axis_label is None:
+       peaksets_axis_label = PEAKSETS_AXIS_LABEL
+
     # Convenience variables
     n_peaks = len(peaks)
     n_clusters = len(clusters)
@@ -187,7 +200,7 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
     # annotation on y-axis
     # NB the coordinates are in the 'axes' coordinate system
     # see https://matplotlib.org/tutorials/advanced/transforms_tutorial.html
-    ax.set_ylabel("Peak Sets and Intervals",
+    ax.set_ylabel(peaksets_axis_label,
                   fontsize=AXIS_LABEL_FONT_SIZE)
     ax.get_yaxis().set_label_coords(-0.13,0.5)
 
@@ -247,7 +260,7 @@ def make_heatmap(heatmap_file,peaks,clusters,distances,pvalues,counts,
     # Set x axis legend
     if include_tads:
         ax = tads_ax
-    ax.set_xlabel("RNA-seq Clusters",fontsize=AXIS_LABEL_FONT_SIZE)
+    ax.set_xlabel(clusters_axis_label,fontsize=AXIS_LABEL_FONT_SIZE)
 
     # Save to file
     fig.savefig(heatmap_file,format=heatmap_format)
