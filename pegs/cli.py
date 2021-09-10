@@ -20,6 +20,7 @@ from .intervals import make_gene_interval_file
 from .bedtools import fetch_bedtools
 from .bedtools import bedtools_version
 from .utils import find_exe
+from .utils import collect_files
 from . import get_version
 
 # Description
@@ -190,6 +191,16 @@ def pegs():
     except KeyError:
         # Not found, ignore
         pass
+    # Get the peak files
+    peaks = collect_files(args.peaks_dir)
+    if not peaks:
+        logging.fatal("No peaks files found in %s" % args.peaks_dir)
+        return 1
+    # Get the cluster files
+    clusters = collect_files(args.clusters_dir)
+    if not clusters:
+        logging.fatal("No cluster files found in %s" % args.clusters_dir)
+        return 1
     # Check TADs file is actually a file
     if args.tads_file:
        if not os.path.exists(args.tads_file):
@@ -266,8 +277,8 @@ Authors: Mudassar Iqbal, Peter Briggs
     # Calculate the enrichments
     pegs_main(genes_file=gene_interval_file,
               distances=distances,
-              peaks_dir=args.peaks_dir,
-              clusters_dir=args.clusters_dir,
+              peaks=peaks,
+              clusters=clusters,
               tads_file=args.tads_file,
               name=args.name,
               heatmap=args.output_heatmap,

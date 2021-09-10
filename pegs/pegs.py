@@ -34,7 +34,6 @@ from .bedtools import intersect
 from .outputs import make_heatmap
 from .outputs import make_xlsx_file
 from .outputs import write_raw_data
-from .utils import collect_files
 from .utils import count_genes
 from .utils import intersection_file_basename
 
@@ -283,7 +282,7 @@ def calculate_enrichments(genes_file,distances,peaks,clusters,tads_file,
     # Return the enrichment data
     return (pvalues,counts,tads_pvalues,tads_counts)
 
-def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
+def pegs_main(genes_file,distances,peaks,clusters,
               tads_file,name,heatmap=None,xlsx=None,
               output_directory=None,
               keep_intersection_files=False,
@@ -296,9 +295,8 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
     Arguments:
       genes_file (str): path to BED file with all genes
       distances (list): list of distances to calculate enrichments at
-      peaks_dir (str): path to directory with BED files containing
-        the ChIP-seq peaks
-      clusters_dir (str): path to directory with cluster files
+      peaks (list): list of BED files containing the ChIP-seq peaks
+      clusters (list): list of cluster files
       tads_file (str): path to BED file with TADs
       name (str): basename to use for output files
       heatmap (str): path for output heatmap image file
@@ -325,23 +323,19 @@ def pegs_main(genes_file,distances,peaks_dir,clusters_dir,
                       genes_file)
         return
 
-    # Get the peak files
-    peaks = collect_files(peaks_dir)
+    # Report the peak files
     print("====Peaks Files====")
-    print("Directory: %s"%  peaks_dir)
     if not peaks:
-        logging.fatal("No peaks files found in %s" % peaks_dir)
+        logging.fatal("No peaks files supplied")
         return
     for f in peaks:
         print("%s" % basename(f))
     print("")
 
-    # Get the cluster files
-    clusters = collect_files(clusters_dir)
+    # Report the cluster files
     print("====Cluster Files====")
-    print("Directory: %s" % clusters_dir)
     if not clusters:
-        logging.fatal("No cluster files found in %s" % clusters_dir)
+        logging.fatal("No cluster files supplied")
         return
     for f in clusters:
         print("%s" % basename(f))

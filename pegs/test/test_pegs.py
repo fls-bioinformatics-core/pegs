@@ -462,8 +462,8 @@ chr1	136212828	146212829	TAD4
         distances = [5000000,10000000]
         pegs_main(genes_file,
                   distances,
-                  peaks_dir,
-                  cluster_dir,
+                  peaks,
+                  clusters,
                   tads_file,
                   "pegs_test",
                   output_directory=self.test_dir)
