@@ -248,6 +248,12 @@ run_test "pegs: initial test data" \
     --expected "pegs_count.tsv pegs_pval.tsv" \
     --command "pegs $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters --dump-raw-data"
 #
+# pegs specifying input peaks and clusters explicitly
+run_test "pegs: specify input peaks and clusters explicitly" \
+    --must_exist "pegs_heatmap.png pegs_results.xlsx" \
+    --expected "pegs_count.tsv pegs_pval.tsv" \
+    --command "pegs $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --dump-raw-data"
+#
 # pegs with TADS
 run_test "pegs: initial test data with TADS" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \

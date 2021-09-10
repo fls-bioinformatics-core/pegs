@@ -21,6 +21,7 @@ from .bedtools import fetch_bedtools
 from .bedtools import bedtools_version
 from .utils import find_exe
 from .utils import collect_files
+from .utils import sort_files
 from . import get_version
 
 # Description
@@ -56,15 +57,8 @@ def pegs():
                    "intervals (%s), or a BED file with gene interval "
                    "data" %
                    ','.join(["'%s'" % x for x in BUILTIN_GENE_INTERVALS]))
-    p.add_argument("peaks_dir",
-                   metavar="PEAKS_DIR",
-                   help="directory containing BED files with "
-                   "peaks data")
-    p.add_argument("clusters_dir",
-                   metavar="CLUSTERS_DIR",
-                   help="directory containing gene cluster files")
-    p.add_argument("distances",metavar="DISTANCE",
-                   action="store",
+    p.add_argument("args",
+                   metavar="DISTANCE",
                    nargs="*",
                    default=None,
                    help="optionally specify distance(s) to calculate "
@@ -72,6 +66,19 @@ def pegs():
                    "the default set will be used (i.e. %s)" %
                    ' '.join([str(x) for x in DEFAULT_DISTANCES]))
     p.add_argument('--version',action='version',version=get_version())
+    p.add_argument("--peaks",
+                   metavar="PEAK_SET_FILE",
+                   dest="peaks",
+                   action="store",
+                   nargs="+",
+                   help="one or more input peak set files (BED format)")
+    p.add_argument("--genes",
+                   metavar="GENE_CLUSTER_FILE",
+                   dest="clusters",
+                   action="store",
+                   nargs="+",
+                   help="one or more input gene cluster files (one gene "
+                   "per line)")
     p.add_argument("-t","--tads",metavar="TADS_FILE",
                    dest="tads_file",
                    action="store",
@@ -165,16 +172,44 @@ def pegs():
                                   help="dump the raw data (gene counts and "
                                   "p-values) to TSV files (for debugging)")
     args = p.parse_args()
+    # Deal with positional arguments for peak and cluster files
+    if args.peaks and args.clusters:
+       # Peaks and clusters specified via arguments
+       peaks = sort_files(args.peaks)
+       clusters = sort_files(args.clusters)
+       # Remaining arguments must be distances
+       distances = args.args
+    elif not (args.peaks or args.clusters):
+       if len(args.args) > 1:
+          # First two arguments must be peaks dir and genes dir
+          peaks = collect_files(args.args[0])
+          if not peaks:
+             logging.fatal("No peaks files found in %s" % args.args[0])
+             return 1
+          clusters = collect_files(args.args[1])
+          if not peaks:
+             logging.fatal("No cluster files found in %s" % args.args[1])
+             return 1
+          distances = args.args[2:]
+       else:
+          logging.fatal("Need to specify PEAKS_DIR GENES_DIR [DISTANCE ...]")
+          return 1
+    else:
+       # Only one of either --peaks or --genes specified
+       logging.fatal("Can't specify only one of --peaks or --genes without "
+                     "the other")
+       return 1
     # Generate list of distances
-    if not args.distances:
+    if not distances:
         # Defaults
         distances = [d for d in DEFAULT_DISTANCES]
     else:
         # Assemble from command line
-        distances = list()
-        for d in args.distances:
+        distances_ = list()
+        for d in distances:
             for x in d.split(','):
-                distances.append(int(x))
+                distances_.append(int(x))
+        distances = distances_
     distances = sorted(distances)
     # Check if using built-in interval data
     gene_interval_file = args.gene_intervals
@@ -191,16 +226,6 @@ def pegs():
     except KeyError:
         # Not found, ignore
         pass
-    # Get the peak files
-    peaks = collect_files(args.peaks_dir)
-    if not peaks:
-        logging.fatal("No peaks files found in %s" % args.peaks_dir)
-        return 1
-    # Get the cluster files
-    clusters = collect_files(args.clusters_dir)
-    if not clusters:
-        logging.fatal("No cluster files found in %s" % args.clusters_dir)
-        return 1
     # Check TADs file is actually a file
     if args.tads_file:
        if not os.path.exists(args.tads_file):
