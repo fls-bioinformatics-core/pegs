@@ -175,6 +175,15 @@ def pegs():
     except KeyError:
         # Not found, ignore
         pass
+    # Check TADs file is actually a file
+    if args.tads_file:
+       if not os.path.exists(args.tads_file):
+          logging.fatal("TADs file '%s' doesn't exist" % args.tads_file)
+          return 1
+       elif os.path.isdir(args.tads_file):
+          logging.fatal("TADs file '%s' is a directory (must be a file)"
+                        % args.tads_file)
+          return 1
     # Build colormap for heatmap
     heatmap_cmap = None
     if args.heatmap_color:
