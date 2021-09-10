@@ -15,8 +15,8 @@ These can be used when running ``PEGS`` by specifying the genome
 build names on the command line.
 
 For other genome builds and organisms, a custom gene interval file must
-be generated from refSeq data using the
-:doc:`mk_pegs_intervals <mk_pegs_intervals>` utility.
+be generated from refSeq data using the ``mk_pegs_intervals`` utility
+described in :ref:`making_gene_interval_files`.
 
 Peak set files
 ==============
