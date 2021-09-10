@@ -54,7 +54,8 @@ def collect_files(d):
     """
     return sorted([abspath(join(d,f))
                    for f in listdir(d) if isfile(join(d,f))
-                   and not f.startswith('.')],
+                   and not f.startswith('.')
+                   and not f.endswith('~')],
                   key=split_file_name_for_sort)
 
 def split_file_name_for_sort(f):
