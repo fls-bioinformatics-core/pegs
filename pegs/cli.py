@@ -175,10 +175,29 @@ def pegs():
     # Deal with positional arguments for peak and cluster files
     if args.peaks and args.clusters:
        # Peaks and clusters specified via arguments
-       peaks = sort_files(args.peaks)
-       clusters = sort_files(args.clusters)
+       # Note that trailing peaks or clusters might actually
+       # be distances
+       peaks = list()
+       clusters = list()
+       distances = list()
+       for peakset in args.peaks:
+          if not (peakset.isdigit() or ',' in peakset):
+             # Assume it's a peakset file
+             peaks.append(peakset)
+          else:
+             # Assume it's a distance
+             distances.append(peakset)
+       peaks = sort_files(peaks)
+       for cluster in args.clusters:
+          if not (cluster.isdigit() or ',' in cluster):
+             # Assume it's a peakset file
+             clusters.append(cluster)
+          else:
+             # Assume it's a distance
+             distances.append(cluster)
+       clusters = sort_files(clusters)
        # Remaining arguments must be distances
-       distances = args.args
+       distances = distances.extend(args.args)
     elif not (args.peaks or args.clusters):
        if len(args.args) > 1:
           # First two arguments must be peaks dir and genes dir
