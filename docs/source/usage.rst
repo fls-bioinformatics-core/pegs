@@ -9,7 +9,7 @@ To run an analysis the basic command line is:
 
 ::
 
-    pegs [options] GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR
+    pegs [options] GENE_INTERVALS --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...]
 
 where:
 
@@ -17,11 +17,9 @@ where:
    start sites (TSSs) for all genes; it can either be the
    name of a built-in reference set (for example "mm10"),
    or file with BED interval data
- * ``PEAKS_DIR`` is a directory with input BED files
-   containing the ChIP-seq peaks (or other genomic intervals)
-   data (one peak-set per file)
- * ``CLUSTERS_DIR`` is a directory containing the files
-   defining the gene clusters
+ * ``PEAKSET`` is a BED file containing input ChIP-seq
+   peaks data (or other genomic intervals)
+ * ``CLUSTER`` is a file defing a gene cluster
 
 ``PEGS`` will then calculate the enrichments (p-values and
 counts) using a default set of genomic distances around the
@@ -43,13 +41,13 @@ specified at the end of the command line:
 
 ::
 
-    pegs mm10 ./InputPeaks/ ./Clusters/ [DISTANCE [DISTANCE ...]]
+    pegs mm10 --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...] [DISTANCE [DISTANCE ...]]
 
 For example:
 
 ::
 
-    pegs mm10 ./InputPeaks/ ./Clusters/ 1000 2000
+    pegs mm10 --peaks ./InputPeaks/*.bed ./Clusters/*.txt 1000 2000
 
 will calculate enrichments for +/-1KB and +/-2KB from the centre
 of the input peak-set intervals.
@@ -101,3 +99,31 @@ by using the ``-o`` option to specify the location.
 
    The directory specified by ``-o`` will be created if it
    doesn't already exist.
+
+Legacy command line
+===================
+
+Note that it is still possible to specify peaksets and clusters
+using the "legacy" (version 0.5.1 and earlier) command line
+format:
+
+::
+
+   pegs [options] GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR [DISTANCE [DISTANCE ...]]
+
+In this case:
+
+ * ``PEAKS_DIR`` is a directory with input BED files
+   containing the ChIP-seq peaks (or other genomic intervals)
+   data (one peak-set per file)
+ * ``CLUSTERS_DIR`` is a directory containing the files
+   defining the gene clusters
+
+This mode of operation has been kept for backwards-compatibility
+but is deprecated and is likely to be removed in future; it is
+recommended that scripts are modified to replace this with the
+equivalent command line:
+
+::
+
+   pegs [options] GENE_INTERVALS --peaks PEAKS_DIR/* --genes CLUSTERS_DIR/* [DISTANCE [DISTANCE ...]]
