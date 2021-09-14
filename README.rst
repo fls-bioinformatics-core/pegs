@@ -36,12 +36,12 @@ The simplest use of ``PEGS`` is:
 
 ::
 
-    pegs GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR
+    pegs GENE_INTERVALS --peaks PEAKS1 [PEAKS2 ...] --genes CLUSTERS1 [CLUSTERS2 ...]
 
 where ``GENE_INTERVALS`` is a set of reference transcription
-start sites (TSSs) for all genes, ``PEAKS_DIR`` is a directory
-containing BED files with peak-sets, and ``CLUSTERS_DIR`` is a
-directory containing files defining gene clusters.
+start sites (TSSs) for all genes, ``PEAKS1...N`` are one or more
+BED files with peak-sets, and ``CLUSTERS1...N`` are one or more
+files defining gene clusters.
 
 This will output a PNG heatmap and an XLXS file with the
 p-values and gene counts from the enrichment calculations.
@@ -87,9 +87,9 @@ The ``PEGS`` analysis was performed on these data using the
 command::
 
     pegs mm10 \
-      data/peaks/ data/clusters/ \
+      --peaks data/peaks/*.bed --genes data/clusters/*.txt \
       -t data/mESC-TADs_mm10.txt \
-      1000 5000 10000 50000 100000 200000 500000 1000000 5000000
+      -d 1000 5000 10000 50000 100000 200000 500000 1000000 5000000
 
 The resulting output files (XLSX and heatmap) can be found here:
 
