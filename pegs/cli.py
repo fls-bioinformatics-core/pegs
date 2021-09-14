@@ -27,6 +27,17 @@ from . import get_version
 # Description
 PEGS_DESCRIPTION = "PEGS: Peak-set Enrichment of Gene-Sets"
 
+# Citation
+PEGS_CITATION = """
+If you use PEGS in your research then please cite:
+
+* Briggs P, Hunter AL, Yang Sh et al.
+  PEGS: An efficient tool for gene set enrichment within defined
+  sets of genomic intervals [version 1; peer review: 2 approved].
+  F1000Research 2021, 10:570
+  (https://doi.org/10.12688/f1000research.53926.1)
+"""
+
 # Default set of distances for enrichment calculation
 DEFAULT_DISTANCES = [5000,25000,50000,100000,150000,200000]
 
@@ -254,6 +265,9 @@ Copyright University of Manchester
 Faculty of Biology Medicine and Health
 Authors: Mudassar Iqbal, Peter Briggs
 """)
+    print(PEGS_CITATION)
+
+    print("====PEGS is starting====")
 
     # Add PEGS 'bin' directory in user's home area to PATH
     # NB this might not exist
