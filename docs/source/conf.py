@@ -20,7 +20,7 @@ from pegs import get_version
 # -- Project information -----------------------------------------------------
 
 project = u'PEGS'
-copyright = u'2020, Mudassar Iqbal, Peter Briggs'
+copyright = u'2020-2021, Mudassar Iqbal, Peter Briggs'
 author = u'Mudassar Iqbal, Peter Briggs'
 
 # The short X.Y version
