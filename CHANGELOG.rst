@@ -2,6 +2,31 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.0 (2021-09-14)
+--------------------------
+
+**This version includes updates that are not backwards
+compatible with older versions of PEGS**
+
+* Substantial update to how input files and distances
+  are specified:
+  - New compulsory ``--peaks`` and ``--genes``
+    arguments must now be used to specify one or more
+    peakset and gene cluster files respectively.
+  - Distance intervals must be specified with new
+  ``--distances`` option.
+* New options added to customise the output heatmaps:
+  - ``--x-label`` and ``--y-label`` options allow custom
+    axis labels to be specified.
+  - Documentation on setting custom colours for heatmap
+    has been expanded (along with examples).
+  - Heatmap image format can be specified on the command
+    line either implicitly (via output file name extension)
+    or explicitly (using ``--format`` option). Supports
+    PNG, SVG, PDF etc.
+* Added information on how to cite PEGS.
+
+--------------------------
 Version 0.5.1 (2021-05-12)
 --------------------------
 
