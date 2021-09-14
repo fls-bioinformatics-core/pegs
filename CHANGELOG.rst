@@ -2,6 +2,14 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.1 (2021-09-14)
+--------------------------
+
+* Patches to update the ``README`` and glucocorticoid
+  examples to reflect the  new command line format
+  introduced in version 0.6.0.
+
+--------------------------
 Version 0.6.0 (2021-09-14)
 --------------------------
 
