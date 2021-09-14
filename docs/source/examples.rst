@@ -48,8 +48,8 @@ PEGS analysis
 ``PEGS`` can be run on these data using the command::
 
     pegs mm10 \
-      data/peaks/ data/clusters/ \
-      1000 5000 10000 50000 100000 200000 500000 1000000 5000000 \
+      --peaks data/peaks/*.bed --genes data/clusters/*.txt \
+      -d 1000 5000 10000 50000 100000 200000 500000 1000000 5000000 \
       --tads data/mESC-TADs_mm10.txt \
       --name glucocorticoid \
       -o results/
