@@ -271,7 +271,7 @@ run_test "pegs: keep intersection files" \
     intersection_beds/Intersection.gene_intervals.peakset1.25000.bed
     intersection_beds/Intersection.gene_intervals.peakset2.25000.bed
     intersection_beds/Intersection.gene_intervals.peakset3.25000.bed" \
-    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt 5000,25000 --keep-intersection-files"
+    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --distances 5000 25000 --keep-intersection-files"
 #
 # pegs keeping intermediate intersection files (including TADS)
 run_test "pegs: keep intersection files (including TADS)" \
@@ -285,7 +285,7 @@ run_test "pegs: keep intersection files (including TADS)" \
     intersection_beds/Intersection.gene_intervals.peakset1.tads.bed
     intersection_beds/Intersection.gene_intervals.peakset2.tads.bed
     intersection_beds/Intersection.gene_intervals.peakset3.tads.bed" \
-    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt 5000,25000 -t $DATA_DIR/tads.txt --keep-intersection-files"
+    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --distances 5000 25000 -t $DATA_DIR/tads.txt --keep-intersection-files"
 #
 # pegs with --name option
 run_test "pegs: specify basename for output files" \
@@ -301,13 +301,13 @@ run_test "pegs: specify basename for output files (with TADS)" \
 run_test "pegs: specify distances as multiple values" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \
     --expected "pegs_count.tsv pegs_pval.tsv" \
-    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt 5000 25000 50000 100000 150000 200000 --dump-raw-data"
+    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --distances 5000 25000 50000 100000 150000 200000 --dump-raw-data"
 #
 # pegs specifying distances as single comma-separated argument
 run_test "pegs: specify distances as single comma-separated argument" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \
     --expected "pegs_count.tsv pegs_pval.tsv" \
-    --command "$PEGS --dump-raw-data $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt 5000,25000,50000,100000,150000,200000"
+    --command "$PEGS --dump-raw-data $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --distances 5000,25000,50000,100000,150000,200000"
 #
 # pegs specifying custom heatmap palette settings
 run_test "pegs: customise heatmap palette options" \
@@ -322,7 +322,7 @@ run_test "pegs: specify non-default name for heatmap" \
 # pegs specifying non-default heatmap name and image format
 run_test "pegs: specify non-default name and image format for heatmap" \
     --must_exist "my_heatmap.svg pegs_results.xlsx" \
-    --command "$PEGS $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets $DATA_DIR/clusters -m my_heatmap.svg --format svg"
+    --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt -m my_heatmap.svg --format svg"
 #
 # pegs specifying non-default heatmap image format
 run_test "pegs: specify non-default image format for heatmap" \
@@ -333,18 +333,6 @@ run_test "pegs: specify non-default image format for heatmap" \
 run_test "pegs: specify alternative colour scheme for heatmap" \
     --must_exist "pegs_heatmap.png pegs_results.xlsx" \
     --command "$PEGS $DATA_DIR/gene_intervals.bed --peaks $DATA_DIR/peaksets/*.bed --genes $DATA_DIR/clusters/*.txt --color seagreen"
-#
-# pegs check legacy method for specifying peaks and clusters
-run_test "pegs: check legacy method for specifying peaks and clusters" \
-    --must_exist "pegs_heatmap.png pegs_results.xlsx" \
-    --expected "pegs_count.tsv pegs_pval.tsv" \
-    --command "pegs $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets/ $DATA_DIR/clusters/ --dump-raw-data"
-#
-# pegs check legacy method for specifying inputs, with distances
-run_test "pegs: check legacy method for specifying inputs, with distances" \
-    --must_exist "pegs_heatmap.png pegs_results.xlsx" \
-    --expected "pegs_count.tsv pegs_pval.tsv" \
-    --command "pegs $DATA_DIR/gene_intervals.bed $DATA_DIR/peaksets/ $DATA_DIR/clusters/ 5000 25000 50000 100000 150000 200000 --dump-raw-data"
 #
 #  mk_pegs_intervals
 run_test "mk_pegs_intervals" \

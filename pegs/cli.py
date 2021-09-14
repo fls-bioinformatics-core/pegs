@@ -57,25 +57,19 @@ def pegs():
                    "intervals (%s), or a BED file with gene interval "
                    "data" %
                    ','.join(["'%s'" % x for x in BUILTIN_GENE_INTERVALS]))
-    p.add_argument("args",
-                   metavar="DISTANCE",
-                   nargs="*",
-                   default=None,
-                   help="optionally specify distance(s) to calculate "
-                   "enrichments for; if no distances are specified then "
-                   "the default set will be used (i.e. %s)" %
-                   ' '.join([str(x) for x in DEFAULT_DISTANCES]))
     p.add_argument('--version',action='version',version=get_version())
-    p.add_argument("--peaks",
+    p.add_argument("-p","--peaks",
                    metavar="PEAK_SET_FILE",
                    dest="peaks",
                    action="store",
+                   required=True,
                    nargs="+",
                    help="one or more input peak set files (BED format)")
-    p.add_argument("--genes",
+    p.add_argument("-g","--genes",
                    metavar="GENE_CLUSTER_FILE",
                    dest="clusters",
                    action="store",
+                   required=True,
                    nargs="+",
                    help="one or more input gene cluster files (one gene "
                    "per line)")
@@ -84,6 +78,15 @@ def pegs():
                    action="store",
                    help="BED file with topologically associating "
                    "domains (TADs)")
+    p.add_argument("-d","--distances",
+                   metavar="DISTANCE",
+                   dest="distances",
+                   action="store",
+                   nargs="+",
+                   help="specify distance(s) to calculate enrichments "
+                   "for (if no distances are specified then the default "
+                   "set will be used i.e. %s)" %
+                   ' '.join([str(x) for x in DEFAULT_DISTANCES]))
     output_options = p.add_argument_group("Output options")
     output_options.add_argument("--name",metavar="BASENAME",
                                 dest="name",
@@ -172,63 +175,19 @@ def pegs():
                                   help="dump the raw data (gene counts and "
                                   "p-values) to TSV files (for debugging)")
     args = p.parse_args()
-    # Deal with positional arguments for peak and cluster files
-    if args.peaks and args.clusters:
-       # Peaks and clusters specified via arguments
-       # Note that trailing peaks or clusters might actually
-       # be distances
-       peaks = list()
-       clusters = list()
-       distances = list()
-       for peakset in args.peaks:
-          if not (peakset.isdigit() or ',' in peakset):
-             # Assume it's a peakset file
-             peaks.append(peakset)
-          else:
-             # Assume it's a distance
-             distances.append(peakset)
-       peaks = sort_files(peaks)
-       for cluster in args.clusters:
-          if not (cluster.isdigit() or ',' in cluster):
-             # Assume it's a peakset file
-             clusters.append(cluster)
-          else:
-             # Assume it's a distance
-             distances.append(cluster)
-       clusters = sort_files(clusters)
-       # Remaining arguments must be distances
-       distances = distances.extend(args.args)
-    elif not (args.peaks or args.clusters):
-       if len(args.args) > 1:
-          # First two arguments must be peaks dir and genes dir
-          peaks = collect_files(args.args[0])
-          if not peaks:
-             logging.fatal("No peaks files found in %s" % args.args[0])
-             return 1
-          clusters = collect_files(args.args[1])
-          if not peaks:
-             logging.fatal("No cluster files found in %s" % args.args[1])
-             return 1
-          distances = args.args[2:]
-       else:
-          logging.fatal("Need to specify PEAKS_DIR GENES_DIR [DISTANCE ...]")
-          return 1
-    else:
-       # Only one of either --peaks or --genes specified
-       logging.fatal("Can't specify only one of --peaks or --genes without "
-                     "the other")
-       return 1
+    # Deal with peak and cluster files
+    peaks = sort_files(args.peaks)
+    clusters = sort_files(args.clusters)
     # Generate list of distances
-    if not distances:
+    if not args.distances:
         # Defaults
         distances = [d for d in DEFAULT_DISTANCES]
     else:
         # Assemble from command line
-        distances_ = list()
-        for d in distances:
+        distances = list()
+        for d in args.distances:
             for x in d.split(','):
-                distances_.append(int(x))
-        distances = distances_
+                distances.append(int(x))
     distances = sorted(distances)
     # Check if using built-in interval data
     gene_interval_file = args.gene_intervals

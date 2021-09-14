@@ -32,26 +32,43 @@ count data called ``pegs_results.xlsx``.
 The formats and naming conventions for the various files are
 described in :doc:`inputs` and :doc:`outputs`.
 
-Specifying genomic distances
-============================
+.. warning::
+
+   This is a change in version 0.6.0 to the previous way of
+   specifying peaksets and gene cluster via directories, which
+   is no longer supported but can replicated using a command
+   line of the form:
+
+   ::
+
+       pegs [options] GENE_INTERVALS --peaks PEAKS_DIR/* --genes CLUSTERS_DIR/*
+
+
+Specifying genomic distances (``-d``, ``--distances``)
+======================================================
 
 The default set of genomic distances used in the enrichment
 calculations can be overriden with a custom set of intervals
-specified at the end of the command line:
+specified using the ``-d`` or ``--distances`` option:
 
 ::
 
-    pegs mm10 --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...] [DISTANCE [DISTANCE ...]]
+    pegs mm10 --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...] -d [DISTANCE [DISTANCE ...]]
 
 For example:
 
 ::
 
-    pegs mm10 --peaks ./InputPeaks/*.bed ./Clusters/*.txt 1000 2000
+    pegs mm10 --peaks ./InputPeaks/*.bed ./Clusters/*.txt -d 1000 2000
 
 will calculate enrichments for +/-1KB and +/-2KB from the centre
 of the input peak-set intervals.
 
+.. warning::
+
+   This is a change in version 0.6.0 to the previous way of
+   specifying distances at the end of the command line, which
+   is no longer supported.
 
 Specifying TADs (``-t``, ``--tads``)
 ====================================
@@ -99,31 +116,3 @@ by using the ``-o`` option to specify the location.
 
    The directory specified by ``-o`` will be created if it
    doesn't already exist.
-
-Legacy command line
-===================
-
-Note that it is still possible to specify peaksets and clusters
-using the "legacy" (version 0.5.1 and earlier) command line
-format:
-
-::
-
-   pegs [options] GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR [DISTANCE [DISTANCE ...]]
-
-In this case:
-
- * ``PEAKS_DIR`` is a directory with input BED files
-   containing the ChIP-seq peaks (or other genomic intervals)
-   data (one peak-set per file)
- * ``CLUSTERS_DIR`` is a directory containing the files
-   defining the gene clusters
-
-This mode of operation has been kept for backwards-compatibility
-but is deprecated and is likely to be removed in future; it is
-recommended that scripts are modified to replace this with the
-equivalent command line:
-
-::
-
-   pegs [options] GENE_INTERVALS --peaks PEAKS_DIR/* --genes CLUSTERS_DIR/* [DISTANCE [DISTANCE ...]]
