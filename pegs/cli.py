@@ -20,6 +20,8 @@ from .intervals import make_gene_interval_file
 from .bedtools import fetch_bedtools
 from .bedtools import bedtools_version
 from .utils import find_exe
+from .utils import collect_files
+from .utils import sort_files
 from . import get_version
 
 # Description
@@ -55,27 +57,36 @@ def pegs():
                    "intervals (%s), or a BED file with gene interval "
                    "data" %
                    ','.join(["'%s'" % x for x in BUILTIN_GENE_INTERVALS]))
-    p.add_argument("peaks_dir",
-                   metavar="PEAKS_DIR",
-                   help="directory containing BED files with "
-                   "peaks data")
-    p.add_argument("clusters_dir",
-                   metavar="CLUSTERS_DIR",
-                   help="directory containing gene cluster files")
-    p.add_argument("distances",metavar="DISTANCE",
-                   action="store",
-                   nargs="*",
-                   default=None,
-                   help="optionally specify distance(s) to calculate "
-                   "enrichments for; if no distances are specified then "
-                   "the default set will be used (i.e. %s)" %
-                   ' '.join([str(x) for x in DEFAULT_DISTANCES]))
     p.add_argument('--version',action='version',version=get_version())
+    p.add_argument("-p","--peaks",
+                   metavar="PEAK_SET_FILE",
+                   dest="peaks",
+                   action="store",
+                   required=True,
+                   nargs="+",
+                   help="one or more input peak set files (BED format)")
+    p.add_argument("-g","--genes",
+                   metavar="GENE_CLUSTER_FILE",
+                   dest="clusters",
+                   action="store",
+                   required=True,
+                   nargs="+",
+                   help="one or more input gene cluster files (one gene "
+                   "per line)")
     p.add_argument("-t","--tads",metavar="TADS_FILE",
                    dest="tads_file",
                    action="store",
                    help="BED file with topologically associating "
                    "domains (TADs)")
+    p.add_argument("-d","--distances",
+                   metavar="DISTANCE",
+                   dest="distances",
+                   action="store",
+                   nargs="+",
+                   help="specify distance(s) to calculate enrichments "
+                   "for (if no distances are specified then the default "
+                   "set will be used i.e. %s)" %
+                   ' '.join([str(x) for x in DEFAULT_DISTANCES]))
     output_options = p.add_argument_group("Output options")
     output_options.add_argument("--name",metavar="BASENAME",
                                 dest="name",
@@ -164,6 +175,9 @@ def pegs():
                                   help="dump the raw data (gene counts and "
                                   "p-values) to TSV files (for debugging)")
     args = p.parse_args()
+    # Deal with peak and cluster files
+    peaks = sort_files(args.peaks)
+    clusters = sort_files(args.clusters)
     # Generate list of distances
     if not args.distances:
         # Defaults
@@ -266,8 +280,8 @@ Authors: Mudassar Iqbal, Peter Briggs
     # Calculate the enrichments
     pegs_main(genes_file=gene_interval_file,
               distances=distances,
-              peaks_dir=args.peaks_dir,
-              clusters_dir=args.clusters_dir,
+              peaks=peaks,
+              clusters=clusters,
               tads_file=args.tads_file,
               name=args.name,
               heatmap=args.output_heatmap,

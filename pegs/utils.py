@@ -52,10 +52,16 @@ def collect_files(d):
     """
     Collect files from a directory
     """
-    return sorted([abspath(join(d,f))
-                   for f in listdir(d) if isfile(join(d,f))
-                   and not f.startswith('.')],
-                  key=split_file_name_for_sort)
+    return sort_files([abspath(join(d,f))
+                       for f in listdir(d) if isfile(join(d,f))
+                       and not f.startswith('.')
+                       and not f.endswith('~')])
+
+def sort_files(f):
+    """
+    Sort files based on integer components
+    """
+    return sorted(f,key=split_file_name_for_sort)
 
 def split_file_name_for_sort(f):
     """

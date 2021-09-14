@@ -9,7 +9,7 @@ To run an analysis the basic command line is:
 
 ::
 
-    pegs [options] GENE_INTERVALS PEAKS_DIR CLUSTERS_DIR
+    pegs [options] GENE_INTERVALS --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...]
 
 where:
 
@@ -17,11 +17,9 @@ where:
    start sites (TSSs) for all genes; it can either be the
    name of a built-in reference set (for example "mm10"),
    or file with BED interval data
- * ``PEAKS_DIR`` is a directory with input BED files
-   containing the ChIP-seq peaks (or other genomic intervals)
-   data (one peak-set per file)
- * ``CLUSTERS_DIR`` is a directory containing the files
-   defining the gene clusters
+ * ``PEAKSET`` is a BED file containing input ChIP-seq
+   peaks data (or other genomic intervals)
+ * ``CLUSTER`` is a file defing a gene cluster
 
 ``PEGS`` will then calculate the enrichments (p-values and
 counts) using a default set of genomic distances around the
@@ -34,26 +32,43 @@ count data called ``pegs_results.xlsx``.
 The formats and naming conventions for the various files are
 described in :doc:`inputs` and :doc:`outputs`.
 
-Specifying genomic distances
-============================
+.. warning::
+
+   This is a change in version 0.6.0 to the previous way of
+   specifying peaksets and gene cluster via directories, which
+   is no longer supported but can replicated using a command
+   line of the form:
+
+   ::
+
+       pegs [options] GENE_INTERVALS --peaks PEAKS_DIR/* --genes CLUSTERS_DIR/*
+
+
+Specifying genomic distances (``-d``, ``--distances``)
+======================================================
 
 The default set of genomic distances used in the enrichment
 calculations can be overriden with a custom set of intervals
-specified at the end of the command line:
+specified using the ``-d`` or ``--distances`` option:
 
 ::
 
-    pegs mm10 ./InputPeaks/ ./Clusters/ [DISTANCE [DISTANCE ...]]
+    pegs mm10 --peaks PEAKSET [PEAKSET ...] --genes CLUSTER [CLUSTER ...] -d [DISTANCE [DISTANCE ...]]
 
 For example:
 
 ::
 
-    pegs mm10 ./InputPeaks/ ./Clusters/ 1000 2000
+    pegs mm10 --peaks ./InputPeaks/*.bed ./Clusters/*.txt -d 1000 2000
 
 will calculate enrichments for +/-1KB and +/-2KB from the centre
 of the input peak-set intervals.
 
+.. warning::
+
+   This is a change in version 0.6.0 to the previous way of
+   specifying distances at the end of the command line, which
+   is no longer supported.
 
 Specifying TADs (``-t``, ``--tads``)
 ====================================

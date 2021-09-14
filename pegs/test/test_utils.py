@@ -8,6 +8,7 @@ import shutil
 from pegs.utils import find_exe
 from pegs.utils import count_genes
 from pegs.utils import collect_files
+from pegs.utils import sort_files
 from pegs.utils import split_file_name_for_sort
 from pegs.utils import intersection_file_basename
 
@@ -94,6 +95,18 @@ class TestCollectFiles(unittest.TestCase):
                 fp.write("4930516B21Rik\n")
         self.assertEqual(collect_files(self.test_dir),
                          cluster_files)
+
+class TestSortFiles(unittest.TestCase):
+    def test_sort_files(self):
+        """
+        sort_files: returns list of files sorted appropriately
+        """
+        self.assertEqual(sort_files(("file3","file1","file2")),
+                         ["file1","file2","file3"])
+        self.assertEqual(sort_files(("file10","file1","file21")),
+                         ["file1","file10","file21"])
+        self.assertEqual(sort_files(("file1_10","file1_1","file2_10")),
+                         ["file1_1","file1_10","file2_10"])
 
 class TestSplitFileNameForSort(unittest.TestCase):
     def test_split_file_name_for_sort(self):
