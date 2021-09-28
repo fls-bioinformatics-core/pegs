@@ -32,6 +32,11 @@ for example::
 
 This will provide the ``pegs`` and ``mk_pegs_intervals`` programs.
 
+Alternatively you can install ``PEGS`` into a Conda environment,
+for example::
+
+    % conda install -c bioconda -c conda-forge pegs
+
 The simplest use of ``PEGS`` is:
 
 ::
