@@ -2,6 +2,13 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.2 (2021-09-28)
+--------------------------
+
+* Update the ``README`` and "getting started"
+  documentation to include installation from Conda.
+
+--------------------------
 Version 0.6.1 (2021-09-14)
 --------------------------
 
@@ -22,7 +29,7 @@ compatible with older versions of PEGS**
     arguments must now be used to specify one or more
     peakset and gene cluster files respectively.
   - Distance intervals must be specified with new
-  ``--distances`` option.
+    ``--distances`` option.
 * New options added to customise the output heatmaps:
   - ``--x-label`` and ``--y-label`` options allow custom
     axis labels to be specified.
