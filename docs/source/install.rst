@@ -7,8 +7,8 @@ Running ``PEGS`` requires:
 * The ``PEGS`` Python package, and
 * The ``bedtools`` program from ``BEDTools2``
 
-Installing PEGS
-===============
+Installing PEGS from PyPI using virtualenv and pip
+==================================================
 
 The recommended way to get started with ``PEGS`` is to create a
 Python virtual environment, and then install the software using
@@ -55,6 +55,27 @@ available.
    get an error at runtime relating to Python not being installed
    as a framework; in this case please try reinstalling PEGS using
    the workaround in :doc:`known problems section <known_problems>`.
+
+Installing PEGS using Conda
+===========================
+
+Another approach for installing ``PEGS`` to use
+`Conda <http://conda.pydata.org/docs/>`__ (most easily obtained via
+the `Miniconda Python distribution <http://conda.pydata.org/miniconda.html>`__).
+
+Once you have Conda installed you can create a new Conda environment
+with ``PEGS`` installed using the following command:
+
+::
+
+   conda create -c bioconda -c conda-forge -n pegs pegs
+
+Alternatively you can install ``PEGS`` into an existing Conda
+environment using:
+
+::
+
+   conda install -c bioconda -c conda-forge pegs
 
 Installing BEDTOOLS
 ===================
