@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     utils.py: utility functions for PEGS
-#     Copyright (C) University of Manchester 2018-2020 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2018-2021 Mudassar Iqbal, Peter Briggs
 #
 
 #######################################################################
@@ -17,6 +17,33 @@ from os.path import abspath
 from os.path import basename
 from os.path import splitext
 from fnmatch import fnmatch
+
+#######################################################################
+# Classes
+#######################################################################
+
+class SortableFilename:
+    """
+    Utility class for sorting file names
+    """
+    def __init__(self,f):
+        """
+        Arguments:
+          f (str): the file name to sort on
+        """
+        self.components = split_file_name_for_sort(os.path.basename(f))
+    def __lt__(self,other):
+        """
+        Implement the __lt__ (less than) built-in method
+        """
+        for s,o in zip(self.components,other.components):
+            try:
+                if s < o:
+                    return True
+            except TypeError:
+                if str(s) < str(o):
+                    return True
+        return False
 
 #######################################################################
 # Functions
@@ -61,7 +88,7 @@ def sort_files(f):
     """
     Sort files based on integer components
     """
-    return sorted(f,key=split_file_name_for_sort)
+    return sorted(f,key=SortableFilename)
 
 def split_file_name_for_sort(f):
     """
