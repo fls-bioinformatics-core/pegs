@@ -2,6 +2,17 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.3 (2021-10-25)
+--------------------------
+
+* Patches to improve handling of input files: fix
+  problems with sorting filenames, and perform explicit
+  checks on peaks and cluster files to ensure that they
+  exist and are not actually directories.
+* Update the Conda installation instructions in the
+  ``README`` and documentation.
+
+--------------------------
 Version 0.6.2 (2021-09-28)
 --------------------------
 
