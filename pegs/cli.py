@@ -188,7 +188,23 @@ def pegs():
     args = p.parse_args()
     # Deal with peak and cluster files
     peaks = sort_files(args.peaks)
+    for f in peaks:
+       if not os.path.exists(f):
+          logging.fatal("Peaks file '%s' doesn't exist" % f)
+          return 1
+       elif os.path.isdir(f):
+          logging.fatal("Peaks file '%s' is a directory (must be a file)"
+                        % f)
+          return 1
     clusters = sort_files(args.clusters)
+    for f in clusters:
+       if not os.path.exists(f):
+          logging.fatal("Cluster file '%s' doesn't exist" % f)
+          return 1
+       elif os.path.isdir(f):
+          logging.fatal("Cluster file '%s' is a directory (must be a file)"
+                        % f)
+          return 1
     # Generate list of distances
     if not args.distances:
         # Defaults
