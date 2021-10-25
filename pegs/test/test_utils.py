@@ -107,6 +107,8 @@ class TestSortFiles(unittest.TestCase):
                          ["file1","file10","file21"])
         self.assertEqual(sort_files(("file1_10","file1_1","file2_10")),
                          ["file1_1","file1_10","file2_10"])
+        self.assertEqual(sort_files(("10","file1_1","file2_10")),
+                         ["10","file1_1","file2_10"])
 
 class TestSplitFileNameForSort(unittest.TestCase):
     def test_split_file_name_for_sort(self):
