@@ -77,6 +77,13 @@ environment using:
 
    conda install -c bioconda -c conda-forge pegs
 
+.. warning::
+
+   We recommend installing ``PEGS`` into a new Conda environment to
+   avoid issues with incompatible packages, which has been observed
+   for example when trying to install directly into the base Conda
+   distribtion.
+
 Installing BEDTOOLS
 ===================
 
