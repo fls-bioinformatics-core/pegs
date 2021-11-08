@@ -2,6 +2,14 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.4 (2021-11-08)
+--------------------------
+
+* Update the citation information following publication
+  of supporting paper on F1000Research
+  (https://f1000research.com/articles/10-570/v2)
+
+--------------------------
 Version 0.6.3 (2021-10-25)
 --------------------------
 
