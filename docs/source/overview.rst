@@ -32,6 +32,6 @@ If you use PEGS in your research then please cite:
 
 *  Briggs P, Hunter AL, Yang Sh et al.
    PEGS: An efficient tool for gene set enrichment within defined
-   sets of genomic intervals [version 1; peer review: 2 approved].
+   sets of genomic intervals [version 2; peer review: 2 approved].
    F1000Research 2021, 10:570
-   (https://doi.org/10.12688/f1000research.53926.1)
+   (https://doi.org/10.12688/f1000research.53926.2)
