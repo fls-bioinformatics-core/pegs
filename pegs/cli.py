@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 #     cli.py: CLI for gene cluster enrichment analysis
-#     Copyright (C) University of Manchester 2018-2021 Mudassar Iqbal, Peter Briggs
+#     Copyright (C) University of Manchester 2018-2022 Mudassar Iqbal, Peter Briggs
 #
 from builtins import str
 import os
@@ -10,9 +10,7 @@ import logging
 # Deal with matplotlib backend before importing seaborn
 # See https://stackoverflow.com/a/50089385/579925
 import matplotlib
-if os.environ.get('DISPLAY','') == '':
-   print('No display found: using non-interactive Agg backend')
-   matplotlib.use('Agg')
+matplotlib.use('Agg')
 import seaborn as sns
 import pathlib2
 from .pegs import pegs_main
