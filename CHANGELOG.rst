@@ -2,6 +2,17 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.5 (2022-07-01)
+--------------------------
+
+* Always use the ``Agg`` ``matplotlib`` backend (to
+  avoid problems with systems where ``DISPLAY``
+  environment variable is set but no graphical
+  display is available.
+* Update documentation for ``mk_pegs_intervals`` to
+  clarify how to obtain suitable input files.
+
+--------------------------
 Version 0.6.4 (2021-11-08)
 --------------------------
 
