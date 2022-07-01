@@ -16,11 +16,20 @@ analysis:
 
     mk_pegs_intervals REFGENE_FILE
 
-where:
+where ``REFGENE_FILE`` is the refGene annotation data for the genome
+of interest.
 
- * ``REFGENE_FILE`` is the refGene annotation data for the genome
-   of interest. These annotations can be obtained from UCSC table
-   browser.
+These annotations can be obtained from the `UCSC table browser <https://genome.ucsc.edu/cgi-bin/hgTables>`__  as follows:
+
+* Select the genome and build of interest in the table browser
+* Ensure that **NCBI RefSeq** track is selected
+* Select **get output** to download the annotation to a local file.
+
+An example of the table browser page for ``mm10`` is shown below:
+
+.. image:: images/example_mm10_ucsc_table_browser_refseq.png
+   :width: 650
+   :alt: Example heatmap from PEGS with 'seagreen' colour scheme
 
 By default the output gene interval file will be called
 ``<REFGENE_FILE>_intervals.bed``; you can explicitly specify the
