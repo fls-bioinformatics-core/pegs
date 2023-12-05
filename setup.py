@@ -12,7 +12,7 @@ install_requires = ['numpy==1.19.5',
                     'matplotlib==3.3.4',
                     'pillow==8.1.1',
                     'seaborn==0.11.1',
-                    'xlsxwriter >= 0.8.4',
+                    'xlsxwriter==3.1.9',
                     'pathlib2']
 
 # Acquire package version for installation
