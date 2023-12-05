@@ -292,7 +292,8 @@ def make_xlsx_file(xlsx_file,peaks,clusters,distances,pvalues,counts,
                      for x in clusters]
 
     # Output workbook
-    xlsx_out = xlsxwriter.Workbook(xlsx_file)
+    xlsx_out = xlsxwriter.Workbook(xlsx_file,
+                                   {'constant_memory': True})
 
     # Make separate sheets for each set of values
     ws_common_genes = xlsx_out.add_worksheet("Common Genes")
