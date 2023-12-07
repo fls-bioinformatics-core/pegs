@@ -1,0 +1,59 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  PEGS: An efficient tool for gene set enrichment within
+  defined sets of genomic intervals
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Peter
+    family-names: Briggs
+  - given-names: A. Louise
+    family-names: Hunter
+    orcid: 'https://orcid.org/0000-0002-3874-4852'
+  - given-names: Shen-hsi
+    family-names: Yang
+  - given-names: Andrew D.
+    family-names: Sharrocks
+  - given-names: Mudassar
+    family-names: Iqbal
+    orcid: 'https://orcid.org/0000-0002-5006-4331'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.1234
+repository-code: 'https://github.com/fls-bioinformatics-core/pegs'
+abstract: >-
+  PEGS (Peak-set Enrichment of Gene-Sets) is a Python
+  bioinformatics utility for calculating enrichments of gene
+  clusters at different genomic distances from peaks.
+keywords:
+  - bioinformatics
+license: BSD-3-Clause
+preferred-citation:
+  type: article
+  authors:
+    - given-names: Peter
+      family-names: Briggs
+    - given-names: A. Louise
+      family-names: Hunter
+      orcid: 'https://orcid.org/0000-0002-3874-4852'
+    - given-names: Shen-hsi
+      family-names: Yang
+    - given-names: Andrew D.
+      family-names: Sharrocks
+    - given-names: Mudassar
+      family-names: Iqbal
+      orcid: 'https://orcid.org/0000-0002-5006-4331'
+  doi: "https://doi.org/10.12688/f1000research.53926.2"
+  journal: "F1000Research"
+  title:  >-
+    PEGS: An efficient tool for gene set enrichment within
+    defined sets of genomic intervals [version 2; peer review:
+    2 approved]
+  issue: 579
+  volume: 10
+  year: 2021
