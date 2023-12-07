@@ -2,6 +2,19 @@ Version History and Changes
 ===========================
 
 --------------------------
+Version 0.6.6 (2023-12-07)
+--------------------------
+
+* Fix continuous integration testing workflow in Github
+  Actions to work with Python 3.6.
+* Pin required version of ``xlsxwriter`` to 3.1.9, and
+  fix associated bug when creating XLSX files with TADS
+  using this version.
+* Fix documentation generation on ReadTheDocs.
+* Add ``CITATION.cff`` file to GitHub repository (adds
+  citation information to the repository front page).
+
+--------------------------
 Version 0.6.5 (2022-07-01)
 --------------------------
 
